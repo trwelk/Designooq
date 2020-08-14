@@ -9,38 +9,45 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tab_layout"
-        android:layout_width="417dp"
-        android:layout_height="70dp"
+        android:layout_width="405dp"
+        android:layout_height="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@color/colorPrimary">
+        app:tabBackground="@color/colorPrimary"
+        app:tabTextColor="@color/design_default_color_surface">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/account_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/account_icon_tab"
-            android:text="Account"/>
+            android:text="Account"
+            android:textColor="@color/design_default_color_surface" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/home_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/home_icon_tab"
-            android:text="Home"/>
+            android:text="Home"
+            android:textColor="#FFFFFF" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/chat_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/message_icon_tab"
-            android:text="Messages"/>
+            android:text="Messages"
+            android:textColor="#FFFFFF" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/posts_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/notification_icon_tab"
-            android:text="Notification"/>
+            android:text="Alerts"
+            android:textColor="#FFFFFF" />
+
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
