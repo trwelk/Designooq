@@ -140,8 +140,8 @@
         android:layout_height="51dp"
         android:layout_marginStart="230dp"
         android:layout_marginBottom="164dp"
-        android:background="@color/colorPrimary"
         android:text="@string/review_submit"
+        android:background="@color/colorPrimary"
         android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
         app:layout_constraintStart_toStartOf="parent" />
