@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
 
+    <ImageView
+        android:src="@drawable/background_black"
+        android:id="@+id/im1"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
     <include
         android:id="@+id/main_page_toolbar"
         layout="@layout/app_bar_layout"
@@ -57,6 +64,7 @@
     </com.google.android.material.tabs.TabLayout>
 
 
+
     <include
         android:id="@+id/include2"
         layout="@layout/their_message"
@@ -98,6 +106,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
+
+
         <EditText
             android:id="@+id/editText"
             android:layout_width="match_parent"
@@ -107,7 +117,8 @@
             android:hint="Write a message"
             android:inputType="text"
             android:paddingHorizontal="10dp"
-            android:text="" />
+            android:text=""
+            />
 
         <ImageButton
             android:layout_width="wrap_content"
