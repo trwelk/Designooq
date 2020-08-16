@@ -7,9 +7,15 @@
     tools:context=".MessageListActivity">
 
 
+    <include
+        android:id="@+id/main_page_toolbar"
+        layout="@layout/app_bar_layout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tab_layout"
-        android:layout_width="405dp"
+        android:layout_width="420dp"
         android:layout_height="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,4 +56,13 @@
             android:textColor="#FFFFFF" />
 
     </com.google.android.material.tabs.TabLayout>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
