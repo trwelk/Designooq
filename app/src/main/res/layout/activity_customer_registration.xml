@@ -22,7 +22,7 @@
         android:backgroundTint="@android:color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Full Name"
+        android:text="User Name"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,13 +33,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@android:color/white"
+        android:layout_marginTop="33dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Email"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
+        android:backgroundTint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
@@ -48,13 +48,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@android:color/white"
+        android:layout_marginTop="29dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Password"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
+        android:backgroundTint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
@@ -63,22 +63,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@android:color/white"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Confirm Password"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
+        android:backgroundTint="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="38dp"
+        android:backgroundTint="@android:color/white"
+        android:text="Or Sign in with"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="126dp"
         android:layout_height="51dp"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="228dp"
+        android:layout_marginStart="196dp"
+        android:layout_marginTop="16dp"
         android:background="@color/colorPrimary"
         android:text="Register"
         android:textColor="@color/design_default_color_on_primary"
@@ -86,47 +99,36 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
 
     <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="43dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/google" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="62dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/facebook" />
+
+    <ImageView
         android:id="@+id/imageView3"
         android:layout_width="147dp"
         android:layout_height="119dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="130dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_icon"
-        android:backgroundTint="@android:color/white"
-        />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="234dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@android:color/white"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Website"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="20dp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Experience"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="20dp"
-        android:backgroundTint="@android:color/white"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+        app:srcCompat="@drawable/logo_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
