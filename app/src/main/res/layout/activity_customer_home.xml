@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CustomerHomeActivity">
+
+    <ImageView
+        android:src="@drawable/background_black"
+        android:id="@+id/im1"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+    <include
+        android:id="@+id/main_page_toolbar"
+        layout="@layout/app_bar_layout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tab_layout"
+        android:layout_width="420dp"
+        android:layout_height="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabBackground="@color/colorPrimary"
+        app:tabTextColor="@color/design_default_color_surface">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/account_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/account_icon_tab"
+            android:text="Account"
+            android:textColor="@color/design_default_color_surface" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/home_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/home_icon_tab"
+            android:text="Home"
+            android:textColor="#FFFFFF" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/chat_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/message_icon_tab"
+            android:text="Messages"
+            android:textColor="#FFFFFF" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/posts_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/notification_icon_tab"
+            android:text="Alerts"
+            android:textColor="#FFFFFF" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:clipToPadding="false"
+                android:paddingVertical="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="60dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar">
+
+                <View
+                    android:id="@+id/avatar"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/circle"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/avatar"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/avatar"
+                    android:paddingBottom="4dp"
+                    android:text="Kobe"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/imageView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:layout_alignLeft="@+id/name"
+                    android:layout_marginLeft="-15dp"
+                    android:layout_marginTop="2dp"
+                    android:elevation="2dp"
+                    android:paddingHorizontal="0dp"
+                    android:paddingVertical="0dp"
+                    app:srcCompat="@drawable/bridge_image" />
+
+                <TextView
+                    android:id="@+id/message_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView27"
+                    android:layout_alignLeft="@+id/imageView27"
+                    android:background="@drawable/their_message"
+                    android:elevation="2dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="2dp"
+                    android:text="Bridge Of London
+                                     Hand Drawn sculptor"
+
+                    android:textSize="18dp" />
+
+                <ImageView
+                    android:id="@+id/imageView28"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/message_body"
+                    android:layout_alignLeft="@+id/message_body"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    app:srcCompat="@drawable/like_icon_black" />
+
+                <ImageView
+                    android:id="@+id/imageView29"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_below="@+id/message_body"
+                    android:layout_alignLeft="@+id/imageView28"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="11dp"
+                    app:srcCompat="@drawable/comment_icon_black" />
+
+                <ImageView
+                    android:id="@+id/imageView30"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/message_body"
+                    android:layout_alignLeft="@+id/imageView29"
+                    android:layout_marginLeft="74dp"
+                    android:layout_marginTop="4dp"
+                    app:srcCompat="@drawable/download_icon_black" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingVertical="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="60dp"
+                android:background="@android:color/white"
+
+>
+            app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+                <View
+                    android:id="@+id/avatar2"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/circle"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/avatar2"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/avatar2"
+                    android:paddingBottom="4dp"
+                    android:text="Kobe"
+                    android:textColor="@color/design_default_color_on_primary"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/imageView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name2"
+                    android:layout_alignLeft="@+id/name2"
+                    android:layout_marginLeft="-15dp"
+                    android:layout_marginTop="2dp"
+                    android:elevation="2dp"
+                    android:paddingHorizontal="0dp"
+                    android:paddingVertical="0dp"
+                    app:srcCompat="@drawable/bridge_image" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
