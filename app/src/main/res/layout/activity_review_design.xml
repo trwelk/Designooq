@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
     <ImageView
         android:src="@drawable/background_black"
         android:id="@+id/im1"
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="29dp"
-        android:text="@string/review_description"
+        android:text="@string/review_desc"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,12 +139,12 @@
         android:layout_width="126dp"
         android:layout_height="51dp"
         android:layout_marginStart="230dp"
-        android:layout_marginBottom="164dp"
-        android:text="@string/review_submit"
+        android:layout_marginTop="14dp"
         android:background="@color/colorPrimary"
+        android:text="@string/review_submit"
         android:textColor="@color/design_default_color_on_primary"
-        app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
 
     <ImageView
         android:id="@+id/imageView5"

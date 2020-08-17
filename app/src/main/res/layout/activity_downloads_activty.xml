@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#22303D">
+    tools:context=".MessageListActivity">
 
     <ImageView
         android:id="@+id/im1"
@@ -13,8 +12,8 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/background_black"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="-312dp" />
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="48dp" />
 
     <include
         android:id="@+id/main_page_toolbar"
@@ -22,13 +21,14 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
+
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tab_layout"
-        android:layout_width="412dp"
-        android:layout_height="61dp"
+        android:layout_width="420dp"
+        android:layout_height="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.639"
         app:layout_constraintStart_toStartOf="parent"
         app:tabBackground="@color/colorPrimary"
         app:tabTextColor="@color/design_default_color_surface">
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/account_icon_tab"
-            android:text="@string/account"
+            android:text="Account"
             android:textColor="@color/design_default_color_surface" />
 
         <com.google.android.material.tabs.TabItem
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/home_icon_tab"
-            android:text="@string/home"
+            android:text="Home"
             android:textColor="#FFFFFF" />
 
         <com.google.android.material.tabs.TabItem
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/message_icon_tab"
-            android:text="@string/messages"
+            android:text="Messages"
             android:textColor="#FFFFFF" />
 
         <com.google.android.material.tabs.TabItem
@@ -62,10 +62,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/notification_icon_tab"
-            android:text="@string/alerts"
+            android:text="Alerts"
             android:textColor="#FFFFFF" />
 
     </com.google.android.material.tabs.TabLayout>
 
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pir_chart"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
