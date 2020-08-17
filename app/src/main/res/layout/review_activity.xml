@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="29dp"
-        android:text="@string/review_desc"
+        android:text="@string/review_description"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"

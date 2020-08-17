@@ -1,38 +1,23 @@
 <resources>
-
-
     <string name="app_name">Designooq</string>
+    <string name="account">Account</string>
+    <string name="home">Home</string>
+    <string name="messages">Messages</string>
+    <string name="alerts">Alerts</string>
+    <string name="publish_date">Publish Date</string>
+    <string name="valid_date">Valid Date</string>
+    <string name="description">Description</string>
+    <string name="promotion_name">Promotion Name</string>
     <string name="review_title">Review Title</string>
-    <string name="review_desc">Description</string>
-    <string name="review_rating">Rating</string>
-    <string name="review_submit">Add Review</string>
-    <string name="chat_write">Write a message</string>
-    <string name="designer_downloads">Total Downloads</string>
-    <string name="designer_uploads">Total Uploads</string>
-    <string name="designer_designs">My Designs</string>
-    <string name="designer_upload_design">Upload Design</string>
-    <string name="designer_add_promotion">Add promotion</string>
-    <string name="designer_my_promotion">My Promotions</string>
-
-
-    <string name="customer_save_changes_btn">Save changes</string>
-    <string name="customer_username">Username</string>
-    <string name="customer_email">Email</string>
-    <string name="customer_password">Password</string>
-    <string name="customer_confirm_password">Confirm Password</string>
-    <string name="customer_register_btn">Register</string>
-    <string name="customer_or_login">Or login with</string>
-
-
-    <string name="designer_send_message">Send Message</string>
-    <string name="designer_email">Email</string>
-    <string name="designer_username">Username</string>
-    <string name="designer_password">Password</string>
-    <string name="designer_confirm_password">Confirm password</string>
-    <string name="designer_website">Web site</string>
-    <string name="designer_experience">Expereince</string>
-    <string name="designer_register_btn">Register</string>
-    <string name="designer_logout">Log out</string>
-
+    <string name="review_description">Review Description</string>
+    <string name="review_submit">Review Submit</string>
+    <string name="category">Category</string>
+    <string name="free">Free</string>
+    <string name="premium">Premium</string>
+    <string name="submit">Submit</string>
+    <string name="reset">Reset</string>
+    <string name="design_name">Design Name</string>
+    <string name="upload">Upload</string>
+    <string name="upload_design">Upload Design</string>
 
 </resources>

@@ -9,29 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DownloadsActivty">
+        <activity android:name=".MessageListActivity"></activity>
+        <activity android:name=".DesignerRegistrationActivity" />
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".DesignerNewPromotion"/>
+        <activity android:name=".DesignerNewDesigns" />
+        <activity android:name=".DesignerMyPromotions"/>
+        <activity android:name=".DesignerMyDesigns">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReviewDesignActivity"></activity>
-        <activity android:name=".CustomerHomeActivity" />
-        <activity android:name=".DesignerAccountDetailsActivity"></activity>
-        <activity android:name=".RegisterOptionActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".LandingActivity" />
-        <activity android:name=".DesignerHomeActivity">
-
-        </activity>
-        <activity android:name=".DesignerAccountActivty" />
-        <activity android:name=".CustomerAccountActivity" />
-        <activity android:name=".CustomerRegistrationActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".MessageListActivity"></activity>
-        <activity android:name=".DesignerRegistrationActivity"></activity>
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
