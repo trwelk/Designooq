@@ -14,8 +14,8 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".DesignerNewPromotion"/>
         <activity android:name=".DesignerNewDesigns" />
-        <activity android:name=".DesignerMyDesigns"/>
-        <activity android:name=".DesignerMyPromotions">
+        <activity android:name=".DesignerMyPromotions"/>
+        <activity android:name=".DesignerMyDesigns">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
