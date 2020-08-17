@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#22303D">
+
+    <ImageView
+        android:src="@drawable/background_black"
+        android:id="@+id/im1"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+    <include
+        android:id="@+id/main_page_toolbar"
+        layout="@layout/app_bar_layout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tab_layout"
+        android:layout_width="412dp"
+        android:layout_height="61dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.639"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabBackground="@color/colorPrimary"
+        app:tabTextColor="@color/design_default_color_surface">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/account_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/account_icon_tab"
+            android:text="@string/account"
+            android:textColor="@color/design_default_color_surface" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/home_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/home_icon_tab"
+            android:text="@string/home"
+            android:textColor="#FFFFFF" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/chat_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/message_icon_tab"
+            android:text="@string/messages"
+            android:textColor="#FFFFFF" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/posts_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/notification_icon_tab"
+            android:text="@string/alerts"
+            android:textColor="#FFFFFF" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbar1"
+        android:layout_width="418dp"
+        android:layout_height="54dp"
+        android:background="#345E41"
+        android:backgroundTintMode="screen"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:navigationIcon="@drawable/abc_vector_test"
+        app:title="Add Promotion"
+        app:titleMargin="8dp"
+        app:titleTextColor="#EEF2F6" />
+
+    <TextView
+        android:id="@+id/txtView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/publish_date"
+        android:textColor="@color/design_default_color_on_primary"
+        android:backgroundTint="@android:color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.263" />
+
+    <TextView
+        android:id="@+id/txtView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/valid_date"
+        android:textColor="@color/design_default_color_on_primary"
+        android:backgroundTint="@android:color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.642"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.263" />
+
+    <TextView
+        android:id="@+id/txtView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        android:textColor="@color/design_default_color_on_primary"
+        android:backgroundTint="@android:color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <TextView
+        android:id="@+id/txtView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/white"
+        android:text="@string/category"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.684" />
+
+    <EditText
+        android:id="@+id/edittxt1"
+        android:layout_width="152dp"
+        android:layout_height="47dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/design_default_color_on_primary"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.137" />
+
+    <EditText
+        android:id="@+id/edittxt2"
+        android:layout_width="334dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="22dp"
+        android:backgroundTint="@android:color/white"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/design_default_color_on_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.522" />
+
+    <TextView
+        android:id="@+id/txtView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/promotion_name"
+        android:textColor="@color/design_default_color_on_primary"
+        android:backgroundTint="@android:color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/im1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.147" />
+
+    <EditText
+        android:id="@+id/txtdate1"
+        android:layout_width="152dp"
+        android:layout_height="47dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/design_default_color_on_primary"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <EditText
+        android:id="@+id/txtdate3"
+        android:layout_width="152dp"
+        android:layout_height="47dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/design_default_color_on_primary"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.816"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="87dp"
+        android:layout_height="52dp"
+        android:background="#F5FFFFFF"
+        android:backgroundTint="@android:color/white"
+        android:text="@string/free"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/im1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.695" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="122dp"
+        android:layout_height="54dp"
+        android:background="#F5FFFFFF"
+        android:backgroundTint="@android:color/white"
+        android:text="@string/premium"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/im1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.697" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="126dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="36dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/submit"
+        android:textColor="@color/design_default_color_on_primary"
+        app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="126dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="204dp"
+        android:layout_marginBottom="36dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/reset"
+        android:textColor="@color/design_default_color_on_primary"
+        app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

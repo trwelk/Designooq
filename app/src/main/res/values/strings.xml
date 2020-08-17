@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">Designooq</string>
+    <string name="account">Account</string>
+    <string name="home">Home</string>
+    <string name="messages">Messages</string>
+    <string name="alerts">Alerts</string>
+    <string name="publish_date">Publish Date</string>
+    <string name="valid_date">Valid Date</string>
+    <string name="description">Description</string>
+    <string name="promotion_name">Promotion Name</string>
     <string name="review_title">Review Title</string>
-    <string name="review_desc">Description</string>
-    <string name="review_rating">Rating</string>
-    <string name="review_submit">Add Review</string>
+    <string name="review_description">Review Description</string>
+    <string name="review_submit">Review Submit</string>
+    <string name="category">Category</string>
+    <string name="free">Free</string>
+    <string name="premium">Premium</string>
+    <string name="submit">Submit</string>
+    <string name="reset">Reset</string>
+    <string name="design_name">Design Name</string>
+    <string name="upload">Upload</string>
+    <string name="upload_design">Upload Design</string>
 
 </resources>

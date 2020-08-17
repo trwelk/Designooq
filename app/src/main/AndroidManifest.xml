@@ -9,14 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatActivity">
-
-        </activity>
-        <activity android:name=".MessageListActivity" >
-        </activity>
+        <activity android:name=".MessageListActivity"></activity>
         <activity android:name=".DesignerRegistrationActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".DesignerNewPromotion"/>
+        <activity android:name=".DesignerNewDesigns" />
+        <activity android:name=".DesignerMyDesigns"/>
+        <activity android:name=".DesignerMyPromotions">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
