@@ -80,7 +80,7 @@
         android:layout_marginStart="196dp"
         android:layout_marginTop="168dp"
         android:background="@color/colorPrimary"
-        android:text="Register"
+        android:text="@string/designer_register_btn"
         android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
@@ -106,7 +106,7 @@
         android:backgroundTint="@android:color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Website"
+        android:text="@string/designer_register_btn"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
 
@@ -119,12 +119,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
         android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/white"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Experience"
+        android:text="@string/designer_experience"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
-        android:backgroundTint="@android:color/white"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />

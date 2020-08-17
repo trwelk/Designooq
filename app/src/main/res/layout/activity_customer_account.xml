@@ -160,8 +160,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="248dp"
         android:layout_marginTop="32dp"
-        android:text="save changes"
         android:background="@color/colorPrimary"
+        android:text="@string/customer_save_changes_btn"
         android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
