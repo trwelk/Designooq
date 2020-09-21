@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".Designooq">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity"/>
         <activity
             android:name=".UsersActivity"
-            android:parentActivityName=".CustomerHomeActivity"></activity>
+            android:parentActivityName=".CustomerHomeActivity"/>
         <activity android:name=".DownloadsActivty" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity android:name=".ReviewDesignActivity" />
