@@ -68,7 +68,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/customer_account_image_view"
         android:layout_width="141dp"
         android:layout_height="141dp"
         android:layout_marginStart="130dp"
@@ -84,23 +84,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/customer_account_image_view"
         app:srcCompat="@drawable/user_icon" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="38dp"
-        android:backgroundTint="@android:color/white"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Kobe Bryant"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -113,21 +98,6 @@
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 
-    <EditText
-        android:id="@+id/editTextTextPersonName5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@android:color/white"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Bryant@gmail.com"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
-
     <ImageView
         android:id="@+id/imageView12"
         android:layout_width="wrap_content"
@@ -139,20 +109,20 @@
         app:srcCompat="@drawable/password_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/customer_account_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
-        android:inputType="textPersonName"
 
+        android:inputType="textPersonName"
         android:text="************"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/customer_account_email" />
 
     <Button
         android:id="@+id/button2"
@@ -164,7 +134,44 @@
         android:text="@string/customer_save_changes_btn"
         android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
+        app:layout_constraintTop_toBottomOf="@+id/customer_account_phone" />
+
+    <EditText
+        android:id="@+id/customer_account_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:backgroundTint="@android:color/white"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textColor="@color/design_default_color_on_primary"
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
+        app:layout_constraintTop_toBottomOf="@+id/customer_account_image_view" />
+
+    <EditText
+        android:id="@+id/customer_account_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@android:color/white"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/design_default_color_on_primary"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/customer_account_username" />
+
+    <Button
+        android:id="@+id/customer_account_change_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="76dp"
+        android:text="change DP"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/customer_account_phone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

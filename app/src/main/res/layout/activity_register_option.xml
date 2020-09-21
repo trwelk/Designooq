@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView17" />
 
     <ImageView
-        android:id="@+id/imageView22"
+        android:id="@+id/register_option_customer_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
@@ -49,7 +49,7 @@
         app:srcCompat="@drawable/register_customer_icon" />
 
     <ImageView
-        android:id="@+id/imageView23"
+        android:id="@+id/register_option_designer_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="172dp"

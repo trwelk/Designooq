@@ -14,7 +14,7 @@
         android:layout_width="match_parent"/>
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/customer_registration_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/customer_registration_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
@@ -41,10 +41,10 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/login_email" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/customer_registration_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
@@ -56,7 +56,7 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/customer_registration_email" />
 
     <EditText
         android:id="@+id/editTextTextPassword2"
@@ -71,10 +71,10 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/customer_registration_password" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/login_register_button"
         android:layout_width="126dp"
         android:layout_height="51dp"
         android:layout_marginStart="196dp"

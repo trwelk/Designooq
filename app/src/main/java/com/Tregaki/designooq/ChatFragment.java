@@ -1,7 +1,9 @@
 package com.Tregaki.designooq;
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,6 @@ import android.view.ViewGroup;
  * A simple {@link Fragment} subclass.
  * Use the {@link ChatFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
 public class ChatFragment extends Fragment {
 
@@ -22,6 +23,10 @@ public class ChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    public ChatFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -39,10 +44,6 @@ public class ChatFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public ChatFragment() {
-        // Required empty public constructor
     }
 
     @Override
