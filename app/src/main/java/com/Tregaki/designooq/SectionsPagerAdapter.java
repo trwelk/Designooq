@@ -22,14 +22,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 FriendsFragment friendsFragment = new FriendsFragment();
                 return  friendsFragment;
             case 1:
-                ChatFragment chatFragment = new ChatFragment();
-                return chatFragment;
+                MyDesignsFragment myDesignsFragment = new MyDesignsFragment();
+                return myDesignsFragment;
             case 2:
                 PostsFragment postsFragment = new PostsFragment();
                 return postsFragment;
                 default:
-                return null;
-        }
+                    ChatFragment chattFragment = new ChatFragment();
+                    return chattFragment;        }
 
     }
 

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +18,21 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FriendsFragment#newInstance} factory method to
+ * Use the {@link MyDesignsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendsFragment extends Fragment {
-
+public class MyDesignsFragment extends Fragment {
     private RecyclerView friendsRecyclerView;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -37,7 +40,7 @@ public class FriendsFragment extends Fragment {
     private String userUid;
     private View mainView;
 
-    public FriendsFragment() {
+    public MyDesignsFragment() {
         // Required empty public constructor
     }
 
@@ -69,7 +72,7 @@ public class FriendsFragment extends Fragment {
         friendsRecyclerView = (RecyclerView)mainView.findViewById(R.id.friends_recycler_view);
         firebaseAuth = FirebaseAuth.getInstance();
         userUid = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("user");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
         friendsRecyclerView.setHasFixedSize(true);
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -82,42 +85,26 @@ public class FriendsFragment extends Fragment {
         super.onStart();
         //databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("online").setValue(true);
 
-        FirebaseRecyclerAdapter<User,UsersViewHolder> usersViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, UsersViewHolder>(
-                User.class,
+        FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder> usersViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder>(
+                Post.class,
                 R.layout.user_list_item,
-                UsersViewHolder.class,
+                MyDesignsFragment.UsersViewHolder.class,
                 databaseReference
         ) {
             @Override
-            protected void populateViewHolder(UsersViewHolder usersViewHolder, final User user, int i) {
-                usersViewHolder.setUsername(user.username);
-                usersViewHolder.setImage(user.image);
-                final String user_id = getRef(i).getKey();
-
-                usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
+            protected void populateViewHolder(final MyDesignsFragment.UsersViewHolder usersViewHolder, final Post post, int i) {
+            Log.d("DS",userUid);
+                databaseReference.orderByChild("from").equalTo(userUid).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]{"View Profile","Send Message"};
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("sd", snapshot.getValue().toString());
+                        usersViewHolder.setUsername(post.title);
+                        usersViewHolder.setImage(post.image);
+                    }
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("Select Option");
-                        builder.setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if(i == 0){
-                                    Intent profileIntent = new Intent(getContext(),CustomerAccountActivity.class);
-                                    profileIntent.putExtra("user_id",user_id);
-                                    profileIntent.putExtra("user_name",user.username);
-                                    startActivity(profileIntent);
-                                }
-                                else if(i == 1){
-                                    Intent chatIntent = new Intent(getContext(),ChatActivity.class);
-                                    chatIntent.putExtra("user_id",user_id);
-                                    startActivity(chatIntent);
-                                }
-                            }
-                        });
-                        builder.show();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
 

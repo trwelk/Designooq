@@ -33,13 +33,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="89dp"
+        android:layout_marginStart="251dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="2dp"
         android:layout_toEndOf="@+id/message_user_image"
         android:background="@drawable/message_text_background"
         android:padding="10dp"
-        android:text="TextViewsdsadsdasdsadsadas"
+        android:text="text view"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>
