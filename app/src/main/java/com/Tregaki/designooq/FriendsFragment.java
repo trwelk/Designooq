@@ -135,6 +135,9 @@ public class FriendsFragment extends Fragment {
             super(itemView);
             mview = itemView;
         }
+        public void setOnline(String online){
+
+        }
 
         public void setUsername(String username){
             TextView itemUsernameView = (TextView)mview.findViewById(R.id.user_list_item_name);

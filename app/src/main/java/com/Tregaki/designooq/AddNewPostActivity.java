@@ -1,0 +1,130 @@
+package com.Tregaki.designooq;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+
+public class AddNewPostActivity extends AppCompatActivity {
+    private ImageButton uploadButton;
+    private EditText postDescription;
+    private StorageReference mStorageRef;
+    private ProgressDialog progressDialog;
+    private DatabaseReference postDb;
+    private String user;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_new_post);
+        uploadButton = (ImageButton) findViewById(R.id.post_fragment_upload_image_button);
+        postDescription = (EditText)findViewById(R.id.post_fragment_post_status_edit_text);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getUid();
+        postDb = FirebaseDatabase.getInstance().getReference("post");
+
+
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(postDescription.getText().toString() == null){
+                    Toast.makeText(getApplicationContext(),"Please provide a description",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    HashMap<String,String> userMap = new HashMap<String,String>();
+                    userMap.put("description",postDescription.getText().toString());
+                    userMap.put("image","default");
+                    userMap.put("user",user);
+                    postDb.child("abcd").setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Log.d("REGISTER_ACTIVITY","SUCCESFULL");
+                            }
+                            else{
+                                Log.d("REGISTER_ACTIVITY","Fail");
+                            }
+                        }
+                    });
+                    Intent gallaryIntent = new Intent();
+                    gallaryIntent.setType("image/*");
+                    gallaryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+                    startActivityForResult(Intent.createChooser(gallaryIntent,"Select image"),2);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && resultCode == RESULT_OK){
+            Uri imageUri = data.getData();
+            //CropImage.activity(imageUri)
+            //       .start(this);
+            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog.setTitle("Uploading Image");
+            progressDialog.setMessage("Please wait while we upload the profile image");
+            progressDialog.setCanceledOnTouchOutside(false);
+            //progressDialog.show();
+
+            final StorageReference filePath = mStorageRef.child("posts").child(11 + ".jpg");
+
+            filePath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+
+
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(task.isSuccessful()){
+                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                postDb.child("abcd").child("image").setValue(uri.toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                        Toast.makeText(getApplicationContext(),"Image Uploaded",Toast.LENGTH_SHORT);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Image Upload failed",Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+        }
+        else{
+            Log.d("Error","ERROR uploading");
+
+        }
+
+
+    }
+}
