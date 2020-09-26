@@ -1,7 +1,6 @@
 package com.Tregaki.designooq;
 
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+    private         DatabaseReference userDb ;
+
     public MessageAdapter(List<Messages> messagesList) {
+
         this.messagesList = messagesList;
+
     }
 
     private List<Messages> messagesList;
@@ -33,23 +42,49 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.MessageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MessageAdapter.MessageViewHolder holder, int position) {
          String currentUserStirng = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         Messages messages = messagesList.get(position);
         String from = messages.getFrom();
-
+        Log.d("CHAT_LOG","MESSAGE LOADING : " + this.getClass().getName());
         if(currentUserStirng.equals(from)){
-            holder.messageText.setBackgroundColor(Color.WHITE);
-            holder.messageText.setTextColor(Color.DKGRAY);
-
+            holder.myMessageText.setBackgroundColor(Color.WHITE);
+            holder.myMessageText.setTextColor(Color.DKGRAY);
+            holder.myMessageText.setText(messages.getMessage());
+            holder.frienMessageText.setEnabled(false);
+            holder.frienMessageText.setVisibility(View.INVISIBLE);
+            holder.senderImage.setVisibility(View.INVISIBLE);
+            holder.senderImage.setEnabled(false);
+            holder.myMessageText.setEnabled(true);
+            holder.myMessageText.setVisibility(View.VISIBLE);
         }
         else{
-            holder.messageText.setBackgroundResource(R.drawable.message_text_background);
-            holder.messageText.setTextColor(Color.WHITE);
+            holder.frienMessageText.setBackgroundResource(R.drawable.message_text_background);
+            holder.frienMessageText.setTextColor(Color.WHITE);
+            holder.frienMessageText.setText(messages.getMessage());
+            holder.myMessageText.setEnabled(false);
+            holder.myMessageText.setVisibility(View.INVISIBLE);
+            holder.frienMessageText.setEnabled(true);
+            holder.frienMessageText.setVisibility(View.VISIBLE);
+            userDb = FirebaseDatabase.getInstance().getReference("user").child(from);
+            userDb.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    final String imageString = snapshot.child("image").getValue().toString();
+                    Picasso.get().load(imageString).placeholder(R.drawable.account_image).into(holder.senderImage);
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
-        holder.messageText.setText(messages.getMessage());
+
+
         Log.d("CHAT_LOG",messages.getMessage());
 
     }
@@ -59,15 +94,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return messagesList.size();
     }
 
+    //the single holder which holds message ui
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView senderImage;
-        public TextView messageText;
+        public TextView frienMessageText;
+        public TextView myMessageText;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             senderImage = (CircleImageView)itemView.findViewById(R.id.message_user_image);
-            messageText = (TextView)itemView.findViewById(R.id.message_message_textview);
-
+            frienMessageText = (TextView)itemView.findViewById(R.id.message_message_textview);
+            myMessageText = (TextView)itemView.findViewById(R.id.message_my_message_textview);
         }
     }
 }

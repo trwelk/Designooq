@@ -40,8 +40,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         tabLayout = (TabLayout)findViewById(R.id.main_tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        userDatabase = FirebaseDatabase.getInstance().getReference("user").child(mAuth.getCurrentUser().getUid());
-
 
 
 
@@ -51,10 +49,17 @@ public class CustomerHomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.d("LOG_AUTH", String.valueOf(currentUser == null));
+
         if(currentUser == null){
+            Log.d("LOG_AUTH","AUTH FAILED");
+            Intent signoutLogin = new Intent(CustomerHomeActivity.this, LoginActivity.class);
+            startActivity(signoutLogin);
             sendToLogin();
         }
         else{
+            userDatabase = FirebaseDatabase.getInstance().getReference("user").child(mAuth.getCurrentUser().getUid());
+
             //userDatabase.child("online").setValue(true);
             //Toast.makeText(getApplicationContext(),"Online",Toast.LENGTH_LONG);
         }
@@ -86,8 +91,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
             startActivity(settingsIntent);
         }
         else if(item.getItemId() == R.id.main_allUsers_btn){
-            Intent settingsIntent = new Intent(CustomerHomeActivity.this,UsersActivity.class);
-            startActivity(settingsIntent);
+            Intent usersIntent = new Intent(CustomerHomeActivity.this,AddNewPostActivity.class);
+            startActivity(usersIntent);
         }
         return true;
 

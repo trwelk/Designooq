@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1035781130766-i661l08isdiad4c35tnbcc32tiuk658o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Tregaki.designooq",
+            "certificate_hash": "365196129a57c15900c9b33180488e79edb1ecde"
+          }
+        },
+        {
           "client_id": "1035781130766-gqiu7b5rat9q2loarb290plo7eir7pne.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -39,12 +39,14 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
-    private Toolbar mainTooldbar;
+    //Database reference
     private DatabaseReference userDatabase;
     private DatabaseReference rootDatabase;
 
 
+    //UI ELEMENTS
     private CircleImageView friendImage;
+    private Toolbar mainTooldbar;
     private TextView friendUserName;
     private ImageButton chatSendButton;
     private ImageButton chatAddButton;
@@ -55,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
 
-
+    //Member variables
     private String friendNameString ;
     private String friendsImageString ;
     private String friendIdString;
@@ -64,28 +66,36 @@ public class ChatActivity extends AppCompatActivity {
     private static int currentPage = 0;
     private int messagePosition = 0;
     private String lastKey = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        //Iniializing database reference
         userDatabase = FirebaseDatabase.getInstance().getReference("user");
         rootDatabase = FirebaseDatabase.getInstance().getReference();
+        //accessing current user and friend info
         currentUserString = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        friendIdString = getIntent().getStringExtra("user_id");
+
+        //Initializing ui elements
         mainTooldbar = (Toolbar) findViewById(R.id.chat_app_bar);
         chatAddButton = (ImageButton)findViewById(R.id.chat_add_button);
         chatSendButton = (ImageButton) findViewById(R.id.chat_send_button);
         chatEditText = (EditText)findViewById(R.id.chat_edit_test);
-        //retrieing messages
         messagesListRecylerView = (RecyclerView) findViewById(R.id.chat_messages_list_recycler_view);
         messagesSwipeLayout = (SwipeRefreshLayout)findViewById(R.id.chat_swipe_message_swipe_layout);
         linearLayoutManager = new LinearLayoutManager(this);
+
+
+
+        //retrieing messages
         messagesListRecylerView.setHasFixedSize(true);
-         messagesListRecylerView.setLayoutManager(linearLayoutManager);
+        messagesListRecylerView.setLayoutManager(linearLayoutManager);
         messageAdapter = new MessageAdapter(messagesList);
         messagesListRecylerView.setAdapter(messageAdapter);
 
-
-        friendIdString = getIntent().getStringExtra("user_id");
+        //configuring the appbar
         setSupportActionBar(mainTooldbar);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -94,17 +104,17 @@ public class ChatActivity extends AppCompatActivity {
         View actionBarView = layoutInflater.inflate(R.layout.chat_custom_bar,null);
         actionBar.setCustomView(actionBarView);
 
-        friendImage = (CircleImageView)findViewById(R.id.custom_bar_image);
-        friendUserName = (TextView) findViewById(R.id.custom_bar_username);
-
-
+        //subscribing to user database to get friends information
         userDatabase.child(friendIdString).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                friendImage = (CircleImageView)findViewById(R.id.custom_bar_image);
+                friendUserName = (TextView) findViewById(R.id.custom_bar_username);
                 friendNameString = snapshot.child("username").getValue().toString();
                 //actionBar.setTitle(friendName);
                 friendsImageString = snapshot.child("image").getValue().toString();
 
+                //Setting friend user name and image in the app bar
                 friendUserName.setText(friendNameString);
                 Picasso.get().load(friendsImageString).placeholder(R.drawable.account_image).into(friendImage);
 
@@ -115,7 +125,8 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-
+        //-----------------------------------------------------------------------------------------------------------------------
+        //creating a new document in the chat document if the user has not already chatted with this person
         rootDatabase.child(currentUserString).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -137,14 +148,13 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-
+        //-----------------------------------------------------------------------------------------------------------------------
+        //invoking the send message methon when the click event is fired
         chatSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,33 +162,37 @@ public class ChatActivity extends AppCompatActivity {
                 chatEditText.setText("");
             }
         });
-
+        //not implemented yet getting errors due to this
         messagesSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currentPage++;
                 messagePosition = 0 ;
-                loadMoreMessages();
+                //loadMoreMessages();
                 messagesSwipeLayout.setRefreshing(false);
 
             }
         });
     }
 
+    //load all the current messages as the activity starts
     @Override
     protected void onStart() {
         super.onStart();
         loadMessages();
-
     }
 
+    //-----------------------------------------------------------------------------------------------------------------------
+    //logic to load the ui elements of the messages and display them
     private void loadMessages() {
+        //query to fetch the messages in the messages document
         Query messageQuery = rootDatabase.child("messages")
                 .child(currentUserString)
-                .child(friendIdString)
-                .limitToLast(TOTAL_MESSAGES_TO_LOAD * (currentPage + 1));
+                .child(friendIdString);
+                //.limitToLast(TOTAL_MESSAGES_TO_LOAD * (currentPage + 1));
 
-        Log.d("CHAT_LOG","Loading");
+        Log.d("CHAT_LOG","Messages Loading : " + this.getClass().getName());
+        //subscriing to the messages of the current user
         messageQuery.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -191,7 +205,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 messagesList.add(message);
                 messageAdapter.notifyDataSetChanged();
-
                 messagesListRecylerView.scrollToPosition(messagesList.size() - 1);
             }
 
@@ -216,6 +229,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
+    //-----------------------------------------------------------------------------------------------------------------------
+    //obsolete method for later use
     private void loadMoreMessages() {
         Query messageQuery = rootDatabase.child("messages")
                 .child(currentUserString)
@@ -262,12 +277,15 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    //Logic for sending the message is written here
     private void sendMessage() {
+        //subscribing to the message
         String messageString = chatEditText.getText().toString();
+        //checking if the user has typed anything
 
         if(!TextUtils.isEmpty(messageString)){
 
-
+            Log.d("CHAT_LOG","MESSAGE VALIDATED : " + this.getClass().getName());
             Map<String, Object> messageMap = new HashMap<>();
             String currentUserRef = "messages/" + currentUserString + "/" + friendIdString;
             String friendRef = "messages/" + friendIdString + "/" + currentUserString;
@@ -275,6 +293,7 @@ public class ChatActivity extends AppCompatActivity {
                     .child(currentUserString).child(friendIdString).push();
             String pushId = userMessageRef.getKey();
 
+            //values for a single message item
             messageMap.put("message",messageString);
             messageMap.put("seen",false);
             messageMap.put("type" , "text");
@@ -282,7 +301,6 @@ public class ChatActivity extends AppCompatActivity {
             messageMap.put("from" , currentUserString);
 
             Map<String, Object> messageUserMap = new HashMap<String, Object>();
-            Log.d("CHAT_LOG","Push" + pushId);
 
             messageUserMap.put(currentUserRef  + "/" + pushId, messageMap );
             messageUserMap.put(friendRef  + "/" + pushId, messageMap );
@@ -291,10 +309,10 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                     if(error == null){
-                        Log.d("CHAT_LOG","Message Sent");
+                        Log.d("CHAT_LOG","MESSAGE SENT SUCCESFULLY : " + this.getClass().getName());
                     }
                     else{
-                        Log.d("CHAT_LOG",error.getMessage());
+                        Log.d("CHAT_LOG","ERROR : " + error.getMessage() +  " : "+ this.getClass().getName());
                     }
                 }
             });
