@@ -60,7 +60,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         else{
             userDatabase = FirebaseDatabase.getInstance().getReference("user").child(mAuth.getCurrentUser().getUid());
 
-            //userDatabase.child("online").setValue(true);
+            userDatabase.child("online").setValue(true);
             //Toast.makeText(getApplicationContext(),"Online",Toast.LENGTH_LONG);
         }
     }
@@ -68,7 +68,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        //userDatabase.child("online").setValue(false);
+        userDatabase.child("online").setValue(false);
     }
 
     @Override

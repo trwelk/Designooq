@@ -24,12 +24,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
 public class AddNewPostActivity extends AppCompatActivity {
     private ImageButton uploadButton;
     private EditText postDescription;
+    private EditText postTitle;
     private StorageReference mStorageRef;
     private ProgressDialog progressDialog;
     private DatabaseReference postDb;
@@ -44,6 +46,7 @@ public class AddNewPostActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getUid();
         postDb = FirebaseDatabase.getInstance().getReference("post");
+        postTitle = (EditText)findViewById(R.id.add_new_post_title);
 
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +60,8 @@ public class AddNewPostActivity extends AppCompatActivity {
                     HashMap<String,String> userMap = new HashMap<String,String>();
                     userMap.put("description",postDescription.getText().toString());
                     userMap.put("image","default");
+                    userMap.put("month", (Integer.toString(new Date().getMonth())));
+                    userMap.put("title",postTitle.getText().toString());
                     userMap.put("user",user);
                     postId = Integer.toString(rand.nextInt(100000));
                     postDb.child(postId).setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -117,6 +122,8 @@ public class AddNewPostActivity extends AppCompatActivity {
                         });
 
                         Toast.makeText(getApplicationContext(),"Image Uploaded",Toast.LENGTH_SHORT);
+                        Intent homeIntent = new Intent(AddNewPostActivity.this,CustomerHomeActivity.class);
+                        startActivity(homeIntent);
                     }
                     else{
                         Toast.makeText(getApplicationContext(),"Image Upload failed",Toast.LENGTH_SHORT);

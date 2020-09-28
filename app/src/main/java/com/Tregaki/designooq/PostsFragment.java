@@ -45,6 +45,7 @@ public class PostsFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private RecyclerView postRecylerView;
     private                  String uploaderId;
+    private String type;
 
 
     private String userUid;
@@ -112,7 +113,7 @@ public class PostsFragment extends Fragment {
 
                     }
                 });
-                getRef(i).child("from").addValueEventListener(new ValueEventListener() {
+                getRef(i).child("user").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         uploaderId = snapshot.getValue().toString();
@@ -137,8 +138,9 @@ public class PostsFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(i == 0){
-                                    Intent profileIntent = new Intent(getContext(),CustomerAccountActivity.class);
-                                    profileIntent.putExtra("user_id",uploaderId);
+                                    Intent profileIntent = new Intent(getContext(),DesignerAccountDetailsActivity.class);
+                                    profileIntent.putExtra("designer_id",uploaderId);
+                                    profileIntent.putExtra("type",type);
                                     startActivity(profileIntent);
                                 }
                                 else if(i == 1){

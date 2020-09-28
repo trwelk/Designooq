@@ -36,6 +36,8 @@ public class MyDesignsFragment extends Fragment {
     private RecyclerView friendsRecyclerView;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
+    private String user;
+    private String type;
 
     private String userUid;
     private View mainView;
@@ -61,6 +63,22 @@ public class MyDesignsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        user = firebaseAuth.getUid().toString();
+        FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                type = snapshot.child("type").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
     }
 
@@ -70,7 +88,6 @@ public class MyDesignsFragment extends Fragment {
         // Inflate the layout for this fragment
         mainView = inflater.inflate(R.layout.fragment_friends,container,false);
         friendsRecyclerView = (RecyclerView)mainView.findViewById(R.id.friends_recycler_view);
-        firebaseAuth = FirebaseAuth.getInstance();
         userUid = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
         friendsRecyclerView.setHasFixedSize(true);
@@ -94,12 +111,20 @@ public class MyDesignsFragment extends Fragment {
             @Override
             protected void populateViewHolder(final MyDesignsFragment.UsersViewHolder usersViewHolder, final Post post, int i) {
             Log.d("DS",userUid);
-                databaseReference.orderByChild("from").equalTo(userUid).addValueEventListener(new ValueEventListener() {
+                databaseReference.orderByChild("user").equalTo(userUid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("sd", snapshot.getValue().toString());
-                        usersViewHolder.setUsername(post.title);
-                        usersViewHolder.setImage(post.image);
+                        if (snapshot.getValue() != null) {
+                            Log.d("sd", snapshot.getValue().toString());
+                            usersViewHolder.setUsername(post.title);
+                            usersViewHolder.setImage(post.image);
+                            usersViewHolder.setDescription(post.description);
+
+                        }
+                        else{
+                            usersViewHolder.mview.setEnabled(false);
+                            usersViewHolder.mview.setVisibility(View.INVISIBLE);
+                        }
                     }
 
                     @Override
@@ -120,9 +145,11 @@ public class MyDesignsFragment extends Fragment {
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
             mview = itemView;
+            mview.findViewById(R.id.online_button).setVisibility(View.INVISIBLE);
         }
-        public void setOnline(String online){
-
+        public void setDescription(String description){
+            TextView postDesc = (TextView)mview.findViewById(R.id.user_list_item_phone);
+            postDesc.setText(description);
         }
 
         public void setUsername(String username){

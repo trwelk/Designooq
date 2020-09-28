@@ -44,10 +44,12 @@ public class CustomerAccountActivity extends AppCompatActivity {
     private EditText email;
     private EditText phone;
     private Button changeImageBtn;
+    private Button myDownloadsButton;
     private String user;
     private StorageReference mStorageRef;
     private ImageView customerImg;
     private ProgressDialog progressDialog;
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class CustomerAccountActivity extends AppCompatActivity {
         changeImageBtn = (Button)findViewById(R.id.customer_account_change_image_button);
         customerImg = (ImageView) findViewById(R.id.customer_account_image_view);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        myDownloadsButton = (Button)findViewById(R.id.account_my_downloads_button);
         user = currentUser.getUid();
         userDb = FirebaseDatabase.getInstance().getReference("user").child(user);
         userDb.keepSynced(true);
@@ -74,6 +77,11 @@ public class CustomerAccountActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String nameString = snapshot.child("username").getValue().toString();
                 String emailString = snapshot.child("email").getValue().toString();
+                type = snapshot.child("type").getValue().toString();
+                if(!type.equalsIgnoreCase("designer")){
+                    myDownloadsButton.setVisibility(View.INVISIBLE);
+                    myDownloadsButton.setEnabled(false);
+                }
                 final String imageString = snapshot.child("image").getValue().toString();
                 //String phoneString = snapshot.child("phone").getValue().toString();
                 System.out.println(nameString);
@@ -113,6 +121,14 @@ public class CustomerAccountActivity extends AppCompatActivity {
 
                 startActivityForResult(Intent.createChooser(gallaryIntent,"Select image"),1);
 
+            }
+        });
+
+        myDownloadsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent downloadsIntent = new Intent(CustomerAccountActivity.this,DownloadsActivty.class);
+                startActivity(downloadsIntent);
             }
         });
 
