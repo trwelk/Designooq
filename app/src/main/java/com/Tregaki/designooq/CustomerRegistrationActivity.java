@@ -95,6 +95,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity {
                 finish();
             }
             else{
+Log.d("Reg_LOG","Error");
                 registerProgressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"Sign up failed",Toast.LENGTH_SHORT);
 
