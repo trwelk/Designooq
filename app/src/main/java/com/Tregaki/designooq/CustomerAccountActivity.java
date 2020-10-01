@@ -35,6 +35,9 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import id.zelory.compressor.Compressor;
 
 public class CustomerAccountActivity extends AppCompatActivity {
@@ -42,8 +45,9 @@ public class CustomerAccountActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private EditText username;
     private EditText email;
-    private EditText phone;
+    private EditText password;
     private Button changeImageBtn;
+    private Button changeDetailsButton;
     private Button myDownloadsButton;
     private String user;
     private StorageReference mStorageRef;
@@ -63,10 +67,11 @@ public class CustomerAccountActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference();
         username = (EditText)findViewById(R.id.customer_account_username);
         email = (EditText) findViewById(R.id.customer_account_email);
-        phone =(EditText) findViewById(R.id.customer_account_phone);
+        password =(EditText) findViewById(R.id.customer_account_password);
         changeImageBtn = (Button)findViewById(R.id.customer_account_change_image_button);
         customerImg = (ImageView) findViewById(R.id.customer_account_image_view);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        changeDetailsButton = (Button)findViewById(R.id.customer_account_change_details_button);
         myDownloadsButton = (Button)findViewById(R.id.account_my_downloads_button);
         user = currentUser.getUid();
         userDb = FirebaseDatabase.getInstance().getReference("user").child(user);
@@ -121,6 +126,26 @@ public class CustomerAccountActivity extends AppCompatActivity {
 
                 startActivityForResult(Intent.createChooser(gallaryIntent,"Select image"),1);
 
+            }
+        });
+
+        changeDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map userMap = new HashMap();
+                userMap.put("email",email.getText().toString());
+                userMap.put("password",password.getText().toString());
+                userDb.updateChildren(userMap, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        if (error == null){
+                            Toast.makeText(getApplicationContext(),"Updated succesfully",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),"An Error occured",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -179,23 +204,6 @@ public class CustomerAccountActivity extends AppCompatActivity {
             });
         }
 
-        /*if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                StorageReference filePath = mStorageRef.child("profile_image").child(user);
 
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),"Image Uploaded",Toast.LENGTH_SHORT);
-                        }
-                    }
-                });
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
-        }*/
     }
 }

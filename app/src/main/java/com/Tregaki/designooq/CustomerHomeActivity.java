@@ -5,18 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CustomerHomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -93,6 +98,12 @@ public class CustomerHomeActivity extends AppCompatActivity {
         else if(item.getItemId() == R.id.main_allUsers_btn){
             Intent usersIntent = new Intent(CustomerHomeActivity.this,AddNewPostActivity.class);
             startActivity(usersIntent);
+        }     else if(item.getItemId() == R.id.main_deactivate_btn){
+            //userDatabase.removeValue();
+            mAuth.getCurrentUser().delete();
+            Intent loginIntent = new Intent(CustomerHomeActivity.this,LoginActivity.class);
+            startActivity(loginIntent);
+
         }
         return true;
 
