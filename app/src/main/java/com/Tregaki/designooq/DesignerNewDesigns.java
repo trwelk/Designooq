@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-//Functional Coding 
+//Functional Coding
 public class DesignerNewDesigns  extends  AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -17,4 +17,4 @@ public class DesignerNewDesigns  extends  AppCompatActivity{
 
 
 
-
+//Code Changes Moved
