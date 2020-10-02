@@ -4,6 +4,15 @@ public class Messages {
     private boolean seen;
     private long time;
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setId(String key) {
+        this.key = key;
+    }
+
+    public String key;
     public Messages(boolean seen, long time, String from, String message, String type) {
         this.seen = seen;
         this.time = time;
