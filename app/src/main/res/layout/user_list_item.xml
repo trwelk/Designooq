@@ -35,4 +35,14 @@
         android:layout_toEndOf="@+id/users_item_circular_image"
         android:text="TextView" />
 
+
+    <Button
+        android:id="@+id/online_button"
+        android:layout_width="10dp"
+        android:layout_height="14dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_green_light"
+        android:visibility="visible" />
+
 </RelativeLayout>

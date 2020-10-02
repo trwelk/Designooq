@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MessageListActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/im1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,7 +68,7 @@
     </com.google.android.material.tabs.TabLayout>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/designer_account_image"
         android:layout_width="141dp"
         android:layout_height="141dp"
         android:layout_marginStart="132dp"
@@ -84,11 +84,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_image"
         app:srcCompat="@drawable/user_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/designer_account_username"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -100,7 +100,7 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_image" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -114,7 +114,7 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/designer_account_email"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -126,7 +126,7 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_username" />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -152,7 +152,7 @@
         android:textSize="20dp"
 
         app:layout_constraintStart_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_email" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -165,7 +165,7 @@
         app:srcCompat="@drawable/website_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName7"
+        android:id="@+id/designer_account_website"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -190,7 +190,7 @@
         app:srcCompat="@drawable/phone_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName8"
+        android:id="@+id/designer_account_phone"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -202,7 +202,7 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName7" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_website" />
 
     <Button
         android:id="@+id/button3"
@@ -214,7 +214,7 @@
         android:text="Save changes"
         android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_phone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

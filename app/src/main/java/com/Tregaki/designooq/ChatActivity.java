@@ -17,8 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -76,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
         rootDatabase = FirebaseDatabase.getInstance().getReference();
         //accessing current user and friend info
         currentUserString = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        friendIdString = getIntent().getStringExtra("user_id");
+        friendIdString = getIntent().getStringExtra("user_id") ;
 
         //Initializing ui elements
         mainTooldbar = (Toolbar) findViewById(R.id.chat_app_bar);
@@ -103,28 +103,32 @@ public class ChatActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View actionBarView = layoutInflater.inflate(R.layout.chat_custom_bar,null);
         actionBar.setCustomView(actionBarView);
+        Log.d("CHAT_LOG","friend" + friendIdString);
 
         //subscribing to user database to get friends information
-        userDatabase.child(friendIdString).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                friendImage = (CircleImageView)findViewById(R.id.custom_bar_image);
-                friendUserName = (TextView) findViewById(R.id.custom_bar_username);
-                friendNameString = snapshot.child("username").getValue().toString();
-                //actionBar.setTitle(friendName);
-                friendsImageString = snapshot.child("image").getValue().toString();
+        if(friendIdString != null ) {
+            userDatabase.child(friendIdString).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    friendImage = (CircleImageView) findViewById(R.id.custom_bar_image);
+                    friendUserName = (TextView) findViewById(R.id.custom_bar_username);
+                    friendNameString = snapshot.child("username").getValue().toString();
+                    //actionBar.setTitle(friendName);
+                    friendsImageString = snapshot.child("image").getValue().toString();
 
-                //Setting friend user name and image in the app bar
-                friendUserName.setText(friendNameString);
-                Picasso.get().load(friendsImageString).placeholder(R.drawable.account_image).into(friendImage);
 
-            }
+                    //Setting friend user name and image in the app bar
+                    friendUserName.setText(friendNameString);
+                    Picasso.get().load(friendsImageString).placeholder(R.drawable.account_image).into(friendImage);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
         //-----------------------------------------------------------------------------------------------------------------------
         //creating a new document in the chat document if the user has not already chatted with this person
         rootDatabase.child(currentUserString).addValueEventListener(new ValueEventListener() {
@@ -179,6 +183,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if(friendIdString != null)
         loadMessages();
     }
 
@@ -197,7 +202,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Messages message = snapshot.getValue(Messages.class);
-                Log.d("CHAT_LOG","Adding" + message.getMessage());
+                Log.d("CHAT_LOG","Adding" + message.getMessage() + message.getKey());
                 messagePosition++;
                 if(messagePosition == 1){
                     String messageKey = snapshot.getKey();
@@ -244,7 +249,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Messages message = snapshot.getValue(Messages.class);
-                Log.d("CHAT_LOG","Adding" + message.getMessage());
+                Log.d("CHAT_LOG","Adding" + message.getMessage() + message.getKey());
+
                 if(messagePosition == 1){
                     String messageKey = snapshot.getKey();
                     lastKey = messageKey;
@@ -278,45 +284,93 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //Logic for sending the message is written here
-    private void sendMessage() {
+    public void sendMessage() {
         //subscribing to the message
         String messageString = chatEditText.getText().toString();
         //checking if the user has typed anything
 
         if(!TextUtils.isEmpty(messageString)){
-
-            Log.d("CHAT_LOG","MESSAGE VALIDATED : " + this.getClass().getName());
-            Map<String, Object> messageMap = new HashMap<>();
-            String currentUserRef = "messages/" + currentUserString + "/" + friendIdString;
-            String friendRef = "messages/" + friendIdString + "/" + currentUserString;
-            DatabaseReference userMessageRef = rootDatabase.child("messages")
-                    .child(currentUserString).child(friendIdString).push();
-            String pushId = userMessageRef.getKey();
-
-            //values for a single message item
-            messageMap.put("message",messageString);
-            messageMap.put("seen",false);
-            messageMap.put("type" , "text");
-            messageMap.put("time" , ServerValue.TIMESTAMP);
-            messageMap.put("from" , currentUserString);
-
-            Map<String, Object> messageUserMap = new HashMap<String, Object>();
-
-            messageUserMap.put(currentUserRef  + "/" + pushId, messageMap );
-            messageUserMap.put(friendRef  + "/" + pushId, messageMap );
-
-            rootDatabase.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                    if(error == null){
-                        Log.d("CHAT_LOG","MESSAGE SENT SUCCESFULLY : " + this.getClass().getName());
-                    }
-                    else{
-                        Log.d("CHAT_LOG","ERROR : " + error.getMessage() +  " : "+ this.getClass().getName());
-                    }
-                }
-            });
+         boolean error =  sendMessageLogic(currentUserString,friendIdString,messageString);
 
         }
+    }
+
+    public boolean sendMessageLogic(String currentUserString, String friendIdString,String messageString) {
+        boolean errorInMessageSaving = false;
+        Log.d("CHAT_LOG","MESSAGE VALIDATED : " + this.getClass().getName());
+        Map<String, Object> messageMap = new HashMap<>();
+        String currentUserRef = "messages/" + currentUserString + "/" + friendIdString;
+        String friendRef = "messages/" + friendIdString + "/" + currentUserString;
+        DatabaseReference userMessageRef = FirebaseDatabase.getInstance().getReference().child("messages")
+                .child(currentUserString).child(friendIdString).push();
+        String pushId = userMessageRef.getKey();
+        boolean error = false;
+        boolean emptyMessage = false;
+        emptyMessage = messageIsEmpty(messageString);
+        error = senderIsEmpty(currentUserString);
+        error = friendIsEmpty(friendIdString);
+        //values for a single message item
+        messageMap.put("message",messageString);
+        messageMap.put("seen",false);
+        messageMap.put("type" , "text");
+        messageMap.put("time" , ServerValue.TIMESTAMP);
+        messageMap.put("from" , currentUserString);
+
+        Map<String, Object> messageUserMap = new HashMap<String, Object>();
+
+        messageUserMap.put(currentUserRef  + "/" + pushId, messageMap );
+        messageUserMap.put(friendRef  + "/" + pushId, messageMap );
+        if(!error && !emptyMessage) {
+            errorInMessageSaving = addMessageToDatabase(messageUserMap);
+            Log.d("MESSAGE_LOG","SUCCESSFULY SAVING MESSAGE"+errorInMessageSaving);
+        }
+        else if(!error && emptyMessage){
+
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"An error occured please try again",Toast.LENGTH_SHORT).show();
+        }
+
+        return errorInMessageSaving;
+
+    }
+
+    public boolean addMessageToDatabase(Map<String, Object> messageUserMap) {
+        final boolean[] savingError = {false};
+        rootDatabase.updateChildren(messageUserMap, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                if (error == null) {
+                    Log.d("CHAT_LOG", "MESSAGE SENT SUCCESFULLY : " + this.getClass().getName());
+                } else {
+                    savingError[0] = true;
+                    Log.d("CHAT_LOG", "ERROR : " + error.getMessage() + " : " + this.getClass().getName());
+                }
+            }
+        });
+        return savingError[0];
+    }
+
+    public boolean friendIsEmpty(String friendIdString) {
+        if (friendIdString == null)
+        return true;
+        else if(friendIdString.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean senderIsEmpty(String currentUserString) {
+        if( currentUserString == null ||currentUserString.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean messageIsEmpty(String messageString) {
+        if(messageString == null || messageString.isEmpty())
+            return true;
+        else
+            return false;
     }
 }

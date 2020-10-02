@@ -18,13 +18,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="196dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
         android:hint="@string/customer_username"
-        android:textColorHint="@android:color/white"
         android:inputType="textPersonName"
         android:textColor="@color/design_default_color_on_primary"
+        android:textColorHint="@android:color/white"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
         android:hint="@string/customer_email"
@@ -61,21 +61,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customer_registration_email" />
 
-    <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="89dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="@android:color/white"
-        android:ems="10"
-
-        android:inputType="textEmailAddress"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customer_registration_password" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="68dp"
@@ -94,7 +79,7 @@
         android:layout_width="62dp"
         android:layout_height="67dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/customer_registration_button"
         app:srcCompat="@drawable/facebook" />
@@ -113,12 +98,12 @@
         android:id="@+id/customer_registration_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="248dp"
+        android:layout_marginTop="80dp"
         android:background="@color/colorPrimary"
         android:text="@string/customer_register_btn"
         android:textColor="@color/design_default_color_on_primary"
         app:layout_constraintStart_toStartOf="@+id/im1"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/customer_registration_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,7 @@ public class Designooq extends Application {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot != null) {
-                        //userDatabase.child("online").onDisconnect().setValue(false);
+                        userDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("online").onDisconnect().setValue(false);
                     }
                 }
 
