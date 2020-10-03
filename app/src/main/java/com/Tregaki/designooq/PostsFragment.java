@@ -1,21 +1,29 @@
 package com.Tregaki.designooq;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,8 +31,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,6 +60,7 @@ public class PostsFragment extends Fragment {
     private RecyclerView postRecylerView;
     private                  String uploaderId;
     private String type;
+    private ImageButton addPostButton;
 
 
     private String userUid;
@@ -82,14 +97,70 @@ public class PostsFragment extends Fragment {
         userdatabaseReference = FirebaseDatabase.getInstance().getReference().child("user");
         postRecylerView.setHasFixedSize(true);
         postRecylerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        addPostButton = (ImageButton)mainView.findViewById(R.id.posts_fragment_add_new_post);
 
         return mainView;
+    }
+
+    public void downloadFile(String uRl) {
+        File direct = new File(String.valueOf(Environment.getExternalStorageDirectory()));
+
+        if (!direct.exists()) {
+            direct.mkdirs();
+        }
+
+        DownloadManager mgr = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+
+        Uri downloadUri = Uri.parse(uRl);
+        DownloadManager.Request request = new DownloadManager.Request(
+                downloadUri);
+
+        request.setAllowedNetworkTypes(
+                DownloadManager.Request.NETWORK_WIFI
+                        | DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false).setTitle("Demo")
+                .setDescription("Something useful. No, really.")
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, "fileName.jpg");
+
+        Toast.makeText(getContext(),"Image Downloaded",Toast.LENGTH_SHORT).show();
+        mgr.enqueue(request);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+
+        FirebaseDatabase.getInstance().getReference().child("user").child(currentUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final String userType;
+                userType = snapshot.child("type").getValue().toString();
+                Log.d("POSTSFRAGMENT",userType);
+
+                if(!userType.equalsIgnoreCase("designer")){
+                    Log.d("POSTSFRAGMENT",userType);
+                    addPostButton.setVisibility(View.INVISIBLE);
+                    addPostButton.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addPostIntent = new Intent(getContext(),AddNewPostActivity.class);
+                startActivity(addPostIntent);
+            }
+        });
         FirebaseRecyclerAdapter<Post, ChatFragment.PostHolder> postFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, ChatFragment.PostHolder>(
                 Post.class,
                 R.layout.single_post_item,
@@ -100,6 +171,56 @@ public class PostsFragment extends Fragment {
             protected void populateViewHolder(final ChatFragment.PostHolder postHolder, final Post post, int i) {
                 postHolder.setImage(post.getImage());
                 postHolder.setDescription(post.getDescription());
+                final String post_id = getRef(i).getKey();
+                ImageView downloadButton = (ImageView)postHolder.mview.findViewById(R.id.post_download_button);
+                downloadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        downloadFile(post.getImage());
+                    }
+                });
+
+                ImageButton favButton = (ImageButton)postHolder.mview.findViewById(R.id.post_favourite_button);
+                favButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Map<String, Object> postAddMap = new HashMap<>();
+                        postAddMap.put("user", userUid);
+                        postAddMap.put("month", Integer.toString(new Date().getMonth()));
+
+
+                        Map<String, Object> postMainMap = new HashMap<>();
+                        postMainMap.put("post/" + post_id + "/favourite/" + userUid, postAddMap);
+                        if(post.getFavourite() != null) {
+                            if (post.getFavourite().containsKey(userUid)) {
+                                FirebaseDatabase.getInstance().getReference().child("post").child(post_id).child("favourite").child(userUid).removeValue();
+                            } else {
+                                FirebaseDatabase.getInstance().getReference().updateChildren(postMainMap, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                        if (error != null) {
+                                            Log.d("POST_LOG", error
+                                                    .getMessage().toString());
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            FirebaseDatabase.getInstance().getReference().updateChildren(postMainMap, new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                    if (error != null) {
+                                        Log.d("POST_LOG", error
+                                                .getMessage().toString());
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+
                 userdatabaseReference.child(post.getUser()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,6 +234,12 @@ public class PostsFragment extends Fragment {
 
                     }
                 });
+
+                if( post.getFavourite() != null){
+                    if (post.getFavourite().containsKey(userUid))
+                    ((ImageButton) postHolder.mview.findViewById(R.id.post_favourite_button)).setImageResource(R.drawable.heartred);
+                }
+
                 getRef(i).child("user").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -130,7 +257,7 @@ public class PostsFragment extends Fragment {
                 postHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]{"View Profile","Send Message"};
+                        CharSequence options[] = new CharSequence[]{"View designer Profile","Send Message"};
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Select Option");
@@ -164,6 +291,8 @@ public class PostsFragment extends Fragment {
         public PostHolder(@NonNull View itemView) {
             super(itemView);
             mview = itemView;
+
+
 
         }
 

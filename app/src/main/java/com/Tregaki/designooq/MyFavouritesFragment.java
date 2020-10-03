@@ -35,8 +35,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link MyDesignsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyDesignsFragment extends Fragment {
-    private RecyclerView friendsRecyclerView;
+public class MyFavouritesFragment extends Fragment {
+    private RecyclerView favRecyclerView;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private String user;
@@ -45,12 +45,12 @@ public class MyDesignsFragment extends Fragment {
     private String userUid;
     private View mainView;
 
-    public MyDesignsFragment() {
+    public MyFavouritesFragment() {
         // Required empty public constructor
     }
 
-    public static FriendsFragment newInstance(String param1, String param2) {
-        FriendsFragment fragment = new FriendsFragment();
+    public static MyFavouritesFragment newInstance(String param1, String param2) {
+        MyFavouritesFragment fragment = new MyFavouritesFragment();
         return fragment;
     }
 
@@ -63,7 +63,7 @@ public class MyDesignsFragment extends Fragment {
             Intent signoutLogin = new Intent(getContext(), LoginActivity.class);
             startActivity(signoutLogin);
         }
-            user = firebaseAuth.getCurrentUser().getUid().toString();
+        user = firebaseAuth.getCurrentUser().getUid().toString();
         FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,12 +82,12 @@ public class MyDesignsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mainView = inflater.inflate(R.layout.fragment_friends,container,false);
-        friendsRecyclerView = (RecyclerView)mainView.findViewById(R.id.friends_recycler_view);
+        mainView = inflater.inflate(R.layout.fragment_my_favourites,container,false);
+        favRecyclerView = (RecyclerView)mainView.findViewById(R.id.my_fav_recycler_view);
         userUid = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
-        friendsRecyclerView.setHasFixedSize(true);
-        friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        favRecyclerView.setHasFixedSize(true);
+        favRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return mainView;
 
@@ -97,19 +97,19 @@ public class MyDesignsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder> usersViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder>(
+        FirebaseRecyclerAdapter<Post, MyFavouritesFragment.PostViewHolder> postViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, MyFavouritesFragment.PostViewHolder>(
                 Post.class,
                 R.layout.user_list_item,
-                MyDesignsFragment.UsersViewHolder.class,
-                databaseReference.orderByChild("user").equalTo(userUid)
+                MyFavouritesFragment.PostViewHolder.class,
+                databaseReference//.orderByChild("user").equalTo(userUid)
         ) {
             @Override
-            protected void populateViewHolder(final MyDesignsFragment.UsersViewHolder usersViewHolder, final Post post, int i) {
-            Log.d("DS",userUid);
+            protected void populateViewHolder(final MyFavouritesFragment.PostViewHolder postViewHolder, final Post post, int i) {
+                Log.d("DS",userUid);
 
                 final String post_id = getRef(i).getKey();
 
-                usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
+                postViewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         CharSequence options[] = new CharSequence[]{"Edit Post","Remove post"};
@@ -140,21 +140,34 @@ public class MyDesignsFragment extends Fragment {
                     }
                 });
 
-                //-----------------------if user is a designer---------------------------------------------------------------------
 
                 databaseReference.orderByChild("user").equalTo(userUid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue() != null) {
                             Log.d("sd", snapshot.getValue().toString());
-                            usersViewHolder.setUsername(post.title);
-                            usersViewHolder.setImage(post.image);
-                            usersViewHolder.setDescription(post.description);
+                            if(post.getFavourite() != null) {
+                                if (post.getFavourite().containsKey(userUid)) {
+                                    Log.d("postDesc",post.description);
+                                    Log.d("postFav",post.getFavourite().toString());
+                                    postViewHolder.postDesc.setVisibility(View.VISIBLE);
+                                    postViewHolder.custImage.setVisibility(View.VISIBLE);
+                                    postViewHolder.itemUsernameView.setVisibility(View.VISIBLE);
+                                    postViewHolder.setUsername(post.title);
+                                    postViewHolder.setImage(post.image);
+                                    postViewHolder.setDescription(post.description);
+                                }
+                            }
+                            else {
+                                postViewHolder.postDesc.setVisibility(View.INVISIBLE);
+                                postViewHolder.custImage.setVisibility(View.INVISIBLE);
+                                postViewHolder.itemUsernameView.setVisibility(View.INVISIBLE);
+                            }
 
                         }
                         else{
-                            usersViewHolder.mview.setEnabled(false);
-                            usersViewHolder.mview.setVisibility(View.INVISIBLE);
+                            postViewHolder.mview.setEnabled(false);
+                            postViewHolder.mview.setVisibility(View.INVISIBLE);
                         }
                     }
 
@@ -169,30 +182,36 @@ public class MyDesignsFragment extends Fragment {
 
             }
         };
-        friendsRecyclerView.setAdapter(usersViewHolderFirebaseRecyclerAdapter);
+        favRecyclerView.setAdapter(postViewHolderFirebaseRecyclerAdapter);
 
     }
 
-    public static class UsersViewHolder extends RecyclerView.ViewHolder{
+    public static class PostViewHolder extends RecyclerView.ViewHolder{
+
 
         View mview;
-        public UsersViewHolder(@NonNull View itemView) {
+        TextView postDesc;
+        TextView itemUsernameView;
+        CircleImageView custImage;
+
+
+        public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             mview = itemView;
             mview.findViewById(R.id.online_button).setVisibility(View.INVISIBLE);
+            postDesc = (TextView)mview.findViewById(R.id.user_list_item_phone);
+            itemUsernameView = (TextView)mview.findViewById(R.id.user_list_item_name);
+            custImage = (CircleImageView)mview.findViewById(R.id.users_item_circular_image);
         }
         public void setDescription(String description){
-            TextView postDesc = (TextView)mview.findViewById(R.id.user_list_item_phone);
             postDesc.setText(description);
         }
 
         public void setUsername(String username){
-            TextView itemUsernameView = (TextView)mview.findViewById(R.id.user_list_item_name);
             itemUsernameView.setText(username);
         }
 
         public void setImage(String image ){
-            CircleImageView custImage = (CircleImageView)mview.findViewById(R.id.users_item_circular_image);
             Picasso.get().load(image).placeholder(R.drawable.account_image).into(custImage);
         }
 

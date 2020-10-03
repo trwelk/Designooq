@@ -71,11 +71,6 @@ public class DownloadsActivty extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-
-
-
-
     }
     private void setUpPieChart() {
         Log.d("DOWNLOAD_MONTH",Float.toString(downloads.length));
