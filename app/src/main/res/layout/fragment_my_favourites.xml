@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyDesignsFragment">
+    android:background="@drawable/background_black"
+    tools:context=".MyFavouritesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mydesigns_recycler_view"
+        android:id="@+id/my_fav_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp" />
+        android:layout_height="732dp" />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pir_chart"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
 </RelativeLayout>

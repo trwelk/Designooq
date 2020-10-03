@@ -73,6 +73,7 @@ public class CustomerRegistrationActivity extends AppCompatActivity {
                 HashMap<String,String> userMap = new HashMap<String,String>();
                 userMap.put("username",usernameText);
                 userMap.put("email",emailText);
+                userMap.put("type","customer");
                 userMap.put("image","default");
                 //userMap.put("online","false");
 

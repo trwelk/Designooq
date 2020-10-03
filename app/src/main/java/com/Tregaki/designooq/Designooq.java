@@ -22,13 +22,13 @@ public class Designooq extends Application {
         firebaseAuth = FirebaseAuth.getInstance();
         userDatabase =FirebaseDatabase.getInstance().getReference("user");
 
-        if(userDatabase != null ) {
+        if(userDatabase != null  && firebaseAuth.getCurrentUser() != null) {
 
             userDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot != null) {
-                        //userDatabase.child("online").onDisconnect().setValue(false);
+                        userDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("online").onDisconnect().setValue(false);
                     }
                 }
 

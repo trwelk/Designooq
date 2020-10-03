@@ -22,5 +22,7 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.Tregaki.designooq", appContext.getPackageName());
+        assertEquals( true,new ChatActivity().sendMessageLogic("TestUser","TestReciever","testMessage"));
+
     }
 }

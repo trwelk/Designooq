@@ -3,6 +3,7 @@ package com.Tregaki.designooq;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -71,6 +73,9 @@ public class FriendsFragment extends Fragment {
         userUid = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("user");
         friendsRecyclerView.setHasFixedSize(true);
+        //friendsRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(
+          //      getContext()
+        //));
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return mainView;
@@ -92,6 +97,8 @@ public class FriendsFragment extends Fragment {
             protected void populateViewHolder(UsersViewHolder usersViewHolder, final User user, int i) {
                 usersViewHolder.setUsername(user.username);
                 usersViewHolder.setImage(user.image);
+                usersViewHolder.setType(user.getType());
+                usersViewHolder.setOnline(user.isOnline());
                 final String user_id = getRef(i).getKey();
 
                 usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +112,9 @@ public class FriendsFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(i == 0){
-                                    Intent profileIntent = new Intent(getContext(),CustomerAccountActivity.class);
-                                    profileIntent.putExtra("user_id",user_id);
+                                    Intent profileIntent = new Intent(getContext(),DesignerAccountDetailsActivity.class);
+                                    profileIntent.putExtra("designer_id",user_id);
+                                    profileIntent.putExtra("type",user.getType());
                                     profileIntent.putExtra("user_name",user.username);
                                     startActivity(profileIntent);
                                 }
@@ -134,7 +142,12 @@ public class FriendsFragment extends Fragment {
             super(itemView);
             mview = itemView;
         }
-        public void setOnline(String online){
+        public void setOnline(boolean online){
+            Button onlineButton = (Button)mview.findViewById(R.id.online_button);
+            if(online)
+                onlineButton.setBackgroundColor(Color.GREEN);
+            else
+                onlineButton.setBackgroundColor(Color.GRAY);
 
         }
 
@@ -148,5 +161,9 @@ public class FriendsFragment extends Fragment {
             Picasso.get().load(image).placeholder(R.drawable.account_image).into(custImage);
         }
 
+        public void setType(String type) {
+            TextView itemType = (TextView)mview.findViewById(R.id.user_list_item_phone);
+            itemType.setText(type);
+        }
     }
 }

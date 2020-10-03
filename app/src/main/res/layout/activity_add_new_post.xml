@@ -7,6 +7,11 @@
     android:background="@drawable/background_black"
     tools:context=".AddNewPostActivity">
 
+    <include
+        android:id="@+id/main_page_toolbar"
+        layout="@layout/app_bar_layout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -27,14 +32,29 @@
         android:gravity="start|top"
         android:hint="Post Description"
         android:inputType="textMultiLine"
+        android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF" />
 
     <ImageButton
         android:id="@+id/post_fragment_upload_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="67dp"
+        android:layout_width="87dp"
+        android:layout_height="58dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="300dp"
-        android:src="@drawable/download_icon_black" />
+        android:src="@drawable/download_icon" />
+
+    <EditText
+        android:id="@+id/add_new_post_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="140dp"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF" />
 
 </RelativeLayout>
