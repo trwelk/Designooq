@@ -22,7 +22,7 @@ public class Designooq extends Application {
         firebaseAuth = FirebaseAuth.getInstance();
         userDatabase =FirebaseDatabase.getInstance().getReference("user");
 
-        if(userDatabase != null ) {
+        if(userDatabase != null  && firebaseAuth.getCurrentUser() != null) {
 
             userDatabase.addValueEventListener(new ValueEventListener() {
                 @Override

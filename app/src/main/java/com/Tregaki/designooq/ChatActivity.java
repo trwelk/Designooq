@@ -304,11 +304,12 @@ public class ChatActivity extends AppCompatActivity {
         DatabaseReference userMessageRef = FirebaseDatabase.getInstance().getReference().child("messages")
                 .child(currentUserString).child(friendIdString).push();
         String pushId = userMessageRef.getKey();
-        boolean error = false;
+        boolean error1 = false;
+        boolean error2 = false;
         boolean emptyMessage = false;
         emptyMessage = messageIsEmpty(messageString);
-        error = senderIsEmpty(currentUserString);
-        error = friendIsEmpty(friendIdString);
+        error1 = senderIsEmpty(currentUserString);
+        error2 = friendIsEmpty(friendIdString);
         //values for a single message item
         messageMap.put("message",messageString);
         messageMap.put("seen",false);
@@ -320,11 +321,11 @@ public class ChatActivity extends AppCompatActivity {
 
         messageUserMap.put(currentUserRef  + "/" + pushId, messageMap );
         messageUserMap.put(friendRef  + "/" + pushId, messageMap );
-        if(!error && !emptyMessage) {
+        if(!error1 && !error2 && !emptyMessage) {
             errorInMessageSaving = addMessageToDatabase(messageUserMap);
             Log.d("MESSAGE_LOG","SUCCESSFULY SAVING MESSAGE"+errorInMessageSaving);
         }
-        else if(!error && emptyMessage){
+        else if(!error1 && emptyMessage){
 
         }
         else{

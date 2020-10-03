@@ -1,5 +1,6 @@
 package com.Tregaki.designooq;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -19,17 +20,28 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
-    private String user = FirebaseAuth.getInstance().getUid();
     private String userType = new String();
-
+    private  String user;
 
     public void SectionsPagerAdapter(){
+
+
+
+    }
+    @Override
+    public Fragment getItem(int position) {
+
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
         FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d("PAGER_ADAPTER",snapshot.toString());
                 userType = snapshot.child("type").getValue().toString();
-                Log.d("PAGER_ADAPTER",userType.toString());
+                Log.d("PAGER_ADAPTER","PP" + userType.toString());
 
             }
 
@@ -39,22 +51,31 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             }
         });
 
-    }
-    @Override
-    public Fragment getItem(int position) {
         switch (position){
             case 0:
                 FriendsFragment friendsFragment = new FriendsFragment();
                 return  friendsFragment;
+            /* case 1:
+                   MyDesignsFragment myDesignsFragment = new MyDesignsFragment();
+                    return myDesignsFragment;*/
             case 1:
-                MyDesignsFragment myDesignsFragment = new MyDesignsFragment();
-                return myDesignsFragment;
+                if (userType == "designer") {
+                    Log.d("TYPE_LOG",userType);
+                    MyDesignsFragment myDesignsFragment = new MyDesignsFragment();
+                    return myDesignsFragment;
+                }
+                else{
+                    Log.d("TYPE_LOG_ELSE","use"+userType);
+                    MyFavouritesFragment myFavouritesFragment = new MyFavouritesFragment();
+                    return myFavouritesFragment;
+                }
             case 2:
+                Log.d("PAGER_ADAPTER","PP" + user + userType.toString());
                 PostsFragment postsFragment = new PostsFragment();
                 return postsFragment;
             default:
-                    ChatFragment chattFragment = new ChatFragment();
-                    return chattFragment;        }
+                PostsFragment postsFragmentt = new PostsFragment();
+                    return postsFragmentt;        }
 
     }
 

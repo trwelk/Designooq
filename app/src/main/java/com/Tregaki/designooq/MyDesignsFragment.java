@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -46,15 +49,6 @@ public class MyDesignsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FriendsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FriendsFragment newInstance(String param1, String param2) {
         FriendsFragment fragment = new FriendsFragment();
         return fragment;
@@ -65,11 +59,16 @@ public class MyDesignsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        user = firebaseAuth.getUid().toString();
+        if(firebaseAuth.getCurrentUser() == null){
+            Intent signoutLogin = new Intent(getContext(), LoginActivity.class);
+            startActivity(signoutLogin);
+        }
+            user = firebaseAuth.getCurrentUser().getUid().toString();
         FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 type = snapshot.child("type").getValue().toString();
+                Log.d("ASDW",type);
             }
 
             @Override
@@ -77,9 +76,6 @@ public class MyDesignsFragment extends Fragment {
 
             }
         });
-
-
-
     }
 
     @Override
@@ -91,6 +87,9 @@ public class MyDesignsFragment extends Fragment {
         userUid = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
         friendsRecyclerView.setHasFixedSize(true);
+        friendsRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(
+                getContext()
+        ));
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return mainView;
@@ -100,17 +99,52 @@ public class MyDesignsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("online").setValue(true);
 
         FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder> usersViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder>(
                 Post.class,
                 R.layout.user_list_item,
                 MyDesignsFragment.UsersViewHolder.class,
-                databaseReference
+                databaseReference.orderByChild("user").equalTo(userUid)
         ) {
             @Override
             protected void populateViewHolder(final MyDesignsFragment.UsersViewHolder usersViewHolder, final Post post, int i) {
             Log.d("DS",userUid);
+
+                final String post_id = getRef(i).getKey();
+
+                usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CharSequence options[] = new CharSequence[]{"Edit Post","Remove post"};
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Select Option");
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(i == 0){
+                                    Intent profileIntent = new Intent(getContext(),DesignerAccountDetailsActivity.class);
+                                    profileIntent.putExtra("post_id",post_id);
+                                    profileIntent.putExtra("post_title",post.title);
+                                    profileIntent.putExtra("post_description",post.getDescription());
+                                    startActivity(profileIntent);
+                                }
+                                else if(i == 1){
+                                    databaseReference.child(post_id).removeValue(new DatabaseReference.CompletionListener() {
+                                        @Override
+                                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                            Toast.makeText(getContext(),"Post removed succesfully",Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+
+                //-----------------------if user is a designer---------------------------------------------------------------------
+
                 databaseReference.orderByChild("user").equalTo(userUid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -132,6 +166,9 @@ public class MyDesignsFragment extends Fragment {
 
                     }
                 });
+
+                //-------------------------------------------if user is a customer ------------------------------------
+
 
             }
         };

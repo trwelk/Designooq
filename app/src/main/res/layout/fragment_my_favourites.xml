@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_black"
-    tools:context=".FriendsFragment">
-
+    tools:context=".MyFavouritesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friends_recycler_view"
+        android:id="@+id/my_fav_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="732dp" />
+
 </RelativeLayout>

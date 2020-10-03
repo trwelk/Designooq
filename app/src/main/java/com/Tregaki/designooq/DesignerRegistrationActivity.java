@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 public class DesignerRegistrationActivity extends AppCompatActivity {
@@ -30,6 +33,10 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
     private  EditText email;
     private  EditText phone;
     private EditText website;
+    private boolean hasErrors1 = false;
+    private boolean hasErrors2 = false;
+    private boolean hasErrors3 = false;
+    private boolean hasErrors4 = false;
 
     private FirebaseAuth mAuth;
     private Button registerButton;
@@ -89,23 +96,34 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
                     userMap.put("type","designer");
                     //userMap.put("online","false");
 
+                    hasErrors1 = userNameHasErrors(usernameText);
+                    hasErrors2 = emailHasErrors(emailText);
+                    hasErrors3 = phoneHasErrors(phoneText);
+                    hasErrors4 = websiteHasErrors(webSiteText);
 
-                    database.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Log.d("REGISTER_ACTIVITY","SUCCESFULL");
+
+                    if(!hasErrors1 && !hasErrors1 && !hasErrors3 && !hasErrors2 ) {
+                        database.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("REGISTER_ACTIVITY", "SUCCESFULL");
+                                } else {
+                                    Log.d("REGISTER_ACTIVITY", "Fail");
+                                }
                             }
-                            else{
-                                Log.d("REGISTER_ACTIVITY","Fail");
-                            }
-                        }
-                    });
-                    registerProgressDialog.dismiss();
-                    Intent customerHomeIntent = new Intent(DesignerRegistrationActivity.this,CustomerHomeActivity.class);
-                    customerHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(customerHomeIntent);
-                    finish();
+                        });
+                        registerProgressDialog.dismiss();
+                        Intent customerHomeIntent = new Intent(DesignerRegistrationActivity.this, CustomerHomeActivity.class);
+                        customerHomeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(customerHomeIntent);
+                        finish();
+                    }
+                    else{
+                        registerProgressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(),"Please enter valid details",Toast.LENGTH_LONG).show();
+
+                    }
                 }
                 else{
                     registerProgressDialog.dismiss();
@@ -114,5 +132,40 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean phoneHasErrors(String phoneText) {
+        if(phoneText == null || phoneText.length() != 10)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean websiteHasErrors(String webSiteText) {
+
+        if(webSiteText == null )
+            return true;
+        else{
+            try {
+                URI url = new URI(webSiteText);
+                return false;
+            } catch (URISyntaxException e) {
+                return true;
+            }
+        }
+    }
+
+    public boolean emailHasErrors(String emailText) {
+        if (emailText == null || !emailText.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean userNameHasErrors(String usernameText) {
+        if(usernameText == null || usernameText.length() < 6)
+            return true;
+        else
+            return false;
     }
 }
