@@ -17,4 +17,4 @@ public class DesignerNewDesigns  extends  AppCompatActivity{
 
 
 
-//Code Changes Moved on Designs
+//Design Upload and Promotioa
