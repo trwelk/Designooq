@@ -3,6 +3,7 @@ package com.Tregaki.designooq;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -43,13 +44,16 @@ public class AddNewPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_post);
+        Toolbar mainTooldbar = findViewById(R.id.main_page_toolbar);
+        setSupportActionBar(mainTooldbar);
+        getSupportActionBar().setTitle("Add Post");
         uploadButton = (ImageButton) findViewById(R.id.post_fragment_upload_image_button);
         postDescription = (EditText)findViewById(R.id.post_fragment_post_status_edit_text);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         user = FirebaseAuth.getInstance().getUid();
         postDb = FirebaseDatabase.getInstance().getReference("post");
         postTitle = (EditText)findViewById(R.id.add_new_post_title);
-
+        progressDialog = new ProgressDialog(getApplicationContext());
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +94,7 @@ public class AddNewPostActivity extends AppCompatActivity {
                         gallaryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
                         startActivityForResult(Intent.createChooser(gallaryIntent, "Select image"), 2);
+
                     }
                 }
             }
@@ -121,11 +126,7 @@ public class AddNewPostActivity extends AppCompatActivity {
             Uri imageUri = data.getData();
             //CropImage.activity(imageUri)
             //       .start(this);
-            progressDialog = new ProgressDialog(getApplicationContext());
-            progressDialog.setTitle("Uploading Image");
-            progressDialog.setMessage("Please wait while we upload the profile image");
-            progressDialog.setCanceledOnTouchOutside(false);
-            //progressDialog.show();
+
             Random rand = new Random();
 
             final StorageReference filePath = mStorageRef.child("posts").child(rand.nextInt(100000) + ".jpg");

@@ -1,5 +1,6 @@
 package com.Tregaki.designooq;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -19,16 +20,22 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }
-    private String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private String userType = new String();
-
+    private  String user;
 
     public void SectionsPagerAdapter(){
+
 
 
     }
     @Override
     public Fragment getItem(int position) {
+
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+
         FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -48,12 +55,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 FriendsFragment friendsFragment = new FriendsFragment();
                 return  friendsFragment;
+            /* case 1:
+                   MyDesignsFragment myDesignsFragment = new MyDesignsFragment();
+                    return myDesignsFragment;*/
             case 1:
                 if (userType == "designer") {
+                    Log.d("TYPE_LOG",userType);
                     MyDesignsFragment myDesignsFragment = new MyDesignsFragment();
                     return myDesignsFragment;
                 }
                 else{
+                    Log.d("TYPE_LOG_ELSE","use"+userType);
                     MyFavouritesFragment myFavouritesFragment = new MyFavouritesFragment();
                     return myFavouritesFragment;
                 }

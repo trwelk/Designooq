@@ -7,6 +7,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,11 +32,14 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private SectionsPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
     private DatabaseReference userDatabase;
+    private String userType;
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
+
 
         mAuth = FirebaseAuth.getInstance();
         Toolbar mainTooldbar = (Toolbar) findViewById(R.id.main_page_toolbar);
@@ -43,8 +48,11 @@ public class CustomerHomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.mainPager);
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(sectionsPagerAdapter);
+
         tabLayout = (TabLayout)findViewById(R.id.main_tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        tabLayout.setTabTextColors(ColorStateList.valueOf(Color.WHITE));
 
 
 

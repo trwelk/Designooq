@@ -127,12 +127,23 @@ public class MyFavouritesFragment extends Fragment {
                                     startActivity(profileIntent);
                                 }
                                 else if(i == 1){
-                                    databaseReference.child(post_id).removeValue(new DatabaseReference.CompletionListener() {
-                                        @Override
-                                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                            Toast.makeText(getContext(),"Post removed succesfully",Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                                    Log.d("USER_TYPE_ONCLICK","USER " + type);
+                                    if (type.equalsIgnoreCase("customer")) {
+                                        databaseReference.child(post_id).child("favourite").child(userUid).removeValue(new DatabaseReference.CompletionListener() {
+                                            @Override
+                                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                                Toast.makeText(getContext(), "Post removed from favourites succesfully", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
+                                    else if (type.equalsIgnoreCase("designer")){
+                                        databaseReference.child(post_id).removeValue(new DatabaseReference.CompletionListener() {
+                                            @Override
+                                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                                Toast.makeText(getContext(), "Post removed succesfully", Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+                                    }
                                 }
                             }
                         });
@@ -140,30 +151,50 @@ public class MyFavouritesFragment extends Fragment {
                     }
                 });
 
-
-                databaseReference.orderByChild("user").equalTo(userUid).addValueEventListener(new ValueEventListener() {
+                databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.getValue() != null) {
                             Log.d("sd", snapshot.getValue().toString());
-                            if(post.getFavourite() != null) {
-                                if (post.getFavourite().containsKey(userUid)) {
-                                    Log.d("postDesc",post.description);
-                                    Log.d("postFav",post.getFavourite().toString());
-                                    postViewHolder.postDesc.setVisibility(View.VISIBLE);
-                                    postViewHolder.custImage.setVisibility(View.VISIBLE);
-                                    postViewHolder.itemUsernameView.setVisibility(View.VISIBLE);
-                                    postViewHolder.setUsername(post.title);
-                                    postViewHolder.setImage(post.image);
-                                    postViewHolder.setDescription(post.description);
+                            Log.d("yoo", type.toString());
+
+                            if (type.equalsIgnoreCase("customer")){
+                                Log.d("yooo", type.toString());
+                                if (post.getFavourite() != null) {
+                                    Log.d("yoooo", type.toString());
+                                    if (post.getFavourite().containsKey(userUid)) {
+                                        Log.d("postDesc", post.description);
+                                        Log.d("postFav", post.getFavourite().toString());
+                                        postViewHolder.postDesc.setVisibility(View.VISIBLE);
+                                        postViewHolder.custImage.setVisibility(View.VISIBLE);
+                                        postViewHolder.itemUsernameView.setVisibility(View.VISIBLE);
+                                        postViewHolder.setUsername(post.title);
+                                        postViewHolder.setImage(post.image);
+                                        postViewHolder.setDescription(post.description);
+                                    }
+                                } else {
+                                    postViewHolder.postDesc.setVisibility(View.INVISIBLE);
+                                    postViewHolder.custImage.setVisibility(View.INVISIBLE);
+                                    postViewHolder.itemUsernameView.setVisibility(View.INVISIBLE);
+                                }
+                        }
+                            else{
+                                    if (post.user.equalsIgnoreCase(userUid)) {
+                                        Log.d("postDesc", post.description);
+                                        postViewHolder.postDesc.setVisibility(View.VISIBLE);
+                                        postViewHolder.custImage.setVisibility(View.VISIBLE);
+                                        postViewHolder.itemUsernameView.setVisibility(View.VISIBLE);
+                                        postViewHolder.setUsername(post.title);
+                                        postViewHolder.setImage(post.image);
+                                        postViewHolder.setDescription(post.description);
+                                    }
+
+                                else {
+                                    postViewHolder.postDesc.setVisibility(View.INVISIBLE);
+                                    postViewHolder.custImage.setVisibility(View.INVISIBLE);
+                                    postViewHolder.itemUsernameView.setVisibility(View.INVISIBLE);
                                 }
                             }
-                            else {
-                                postViewHolder.postDesc.setVisibility(View.INVISIBLE);
-                                postViewHolder.custImage.setVisibility(View.INVISIBLE);
-                                postViewHolder.itemUsernameView.setVisibility(View.INVISIBLE);
-                            }
-
                         }
                         else{
                             postViewHolder.mview.setEnabled(false);

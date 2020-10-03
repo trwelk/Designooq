@@ -152,7 +152,10 @@ public class ChatFragment extends Fragment {
             TextView postDescription = mview.findViewById(R.id.single_post_description);
             postDescription.setText(description);
         }
-
+        public void setTitle(String title) {
+            TextView postTitle = mview.findViewById(R.id.single_post_title);
+            postTitle.setText(title);
+        }
         public void setuserImage(String image) {
             CircleImageView userImage = (CircleImageView)mview.findViewById(R.id.single_post_user_image);
             Picasso.get().load(image).placeholder(R.drawable.account_image).into(userImage);

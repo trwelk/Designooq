@@ -73,6 +73,9 @@ public class FriendsFragment extends Fragment {
         userUid = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("user");
         friendsRecyclerView.setHasFixedSize(true);
+        //friendsRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(
+          //      getContext()
+        //));
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return mainView;

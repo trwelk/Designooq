@@ -96,6 +96,9 @@ public class PostsFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
         userdatabaseReference = FirebaseDatabase.getInstance().getReference().child("user");
         postRecylerView.setHasFixedSize(true);
+        postRecylerView.addItemDecoration(new SimpleDividerItemDecoration(
+                getContext()
+        ));
         postRecylerView.setLayoutManager(new LinearLayoutManager(getContext()));
         addPostButton = (ImageButton)mainView.findViewById(R.id.posts_fragment_add_new_post);
 
@@ -171,6 +174,8 @@ public class PostsFragment extends Fragment {
             protected void populateViewHolder(final ChatFragment.PostHolder postHolder, final Post post, int i) {
                 postHolder.setImage(post.getImage());
                 postHolder.setDescription(post.getDescription());
+                postHolder.setTitle(post.title);
+
                 final String post_id = getRef(i).getKey();
                 ImageView downloadButton = (ImageView)postHolder.mview.findViewById(R.id.post_download_button);
                 downloadButton.setOnClickListener(new View.OnClickListener() {
@@ -243,9 +248,10 @@ public class PostsFragment extends Fragment {
                 getRef(i).child("user").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        uploaderId = snapshot.getValue().toString();
-                        Log.d("Trs",uploaderId);
-
+                        if (snapshot.getValue() != null) {
+                            uploaderId = snapshot.getValue().toString();
+                            Log.d("Trs", uploaderId);
+                        }
                     }
 
                     @Override
