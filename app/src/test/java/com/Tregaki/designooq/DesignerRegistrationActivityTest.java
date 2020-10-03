@@ -31,6 +31,7 @@ public class DesignerRegistrationActivityTest {
     public void emailHasErrors() {
         assertEquals(false,designerRegistrationActivity.emailHasErrors(emailPositive) );
         assertEquals(true,designerRegistrationActivity.emailHasErrors(emailNegative) );
+        assertEquals(true,designerRegistrationActivity.emailHasErrors("trewon") );
 
     }
 
