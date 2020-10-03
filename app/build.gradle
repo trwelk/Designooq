@@ -5,6 +5,12 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     defaultConfig {
         applicationId "com.Tregaki.designooq"
         minSdkVersion 24
@@ -25,6 +31,7 @@ android {
 repositories {
     maven { url 'https://jitpack.io' }
 }
+
 
 
 dependencies {
@@ -49,6 +56,18 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:0.4.0'
     implementation 'com.iceteck.silicompressorr:silicompressor:2.2.3'
     implementation 'id.zelory:compressor:3.0.0'
+    // Required -- JUnit 4 framework
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    testImplementation 'junit:junit:4.13'
+
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+
 
 
 }
