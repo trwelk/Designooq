@@ -22,53 +22,8 @@
         tools:layout_editor_absoluteY="0dp" />
 
 
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/main_tab_layout"
-        android:layout_width="420dp"
-        android:layout_height="68dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="@color/design_default_color_surface">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/account_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/account_icon_tab"
-            android:text="Account"
-            android:textColor="@color/design_default_color_surface" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/home_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/home_icon_tab"
-            android:text="Home"
-            android:textColor="#FFFFFF" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/chat_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/message_icon_tab"
-            android:text="Messages"
-            android:textColor="#FFFFFF" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/posts_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/notification_icon_tab"
-            android:text="Alerts"
-            android:textColor="#FFFFFF" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <ImageView
-        android:id="@+id/imageView4"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/designer_account_image"
         android:layout_width="141dp"
         android:layout_height="141dp"
         android:layout_marginStart="132dp"
@@ -84,23 +39,25 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_image"
         app:srcCompat="@drawable/user_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/designer_account_username"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/white"
+        android:editable="false"
         android:ems="10"
+        android:enabled="false"
         android:inputType="textPersonName"
         android:text="Kobe Bryant"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_image" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -114,19 +71,22 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/designer_account_email"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:enabled="false"
+
+        android:inputType=""
         android:text="Bryant@gmail.com"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
+        android:editable="false"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_username" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -139,7 +99,7 @@
         app:srcCompat="@drawable/website_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName7"
+        android:id="@+id/designer_account_website"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -148,10 +108,13 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="BryantDesign.com"
+        android:editable="false"
+        android:enabled="false"
+
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView14"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_email" />
 
     <ImageView
         android:id="@+id/imageView15"
@@ -164,7 +127,7 @@
         app:srcCompat="@drawable/phone_icon" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName8"
+        android:id="@+id/designer_account_phone"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -173,10 +136,13 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="+94 77 8693725"
+        android:editable="false"
+        android:enabled="false"
+
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName7" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_website" />
 
     <ImageView
         android:id="@+id/imageView24"
@@ -184,11 +150,8 @@
         android:layout_height="67dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8"
-        app:layout_constraintVertical_bias="0.083"
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_phone"
         app:srcCompat="@drawable/message_icon" />
 
     <TextView
@@ -200,10 +163,10 @@
         android:text="@string/designer_send_message"
         android:textColor="@color/design_default_color_on_primary"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
+        android:enabled="false"
+
         app:layout_constraintStart_toEndOf="@+id/imageView24"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName8"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/designer_account_phone" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

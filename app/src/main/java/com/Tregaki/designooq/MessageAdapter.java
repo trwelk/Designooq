@@ -50,8 +50,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         String from = messages.getFrom();
         Log.d("CHAT_LOG","MESSAGE LOADING : " + this.getClass().getName());
         if(currentUserStirng.equals(from)){
-            holder.myMessageText.setBackgroundColor(Color.WHITE);
-            holder.myMessageText.setTextColor(Color.DKGRAY);
+            holder.myMessageText.setBackgroundResource(R.drawable.message_text_background);
+            holder.frienMessageText.setTextColor(Color.WHITE);
             holder.myMessageText.setText(messages.getMessage());
             holder.frienMessageText.setEnabled(false);
             holder.frienMessageText.setVisibility(View.INVISIBLE);

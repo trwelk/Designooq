@@ -15,6 +15,6 @@ public class DesignerAccountActivty extends AppCompatActivity {
         Toolbar mainTooldbar = (Toolbar) findViewById(R.id.main_page_toolbar);
 
         setSupportActionBar(mainTooldbar);
-        getSupportActionBar().setTitle("My Account");
+        getSupportActionBar().setTitle("Account Details");
     }
 }

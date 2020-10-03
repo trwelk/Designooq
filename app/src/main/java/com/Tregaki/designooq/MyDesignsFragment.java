@@ -3,7 +3,6 @@ package com.Tregaki.designooq;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,35 +10,39 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FriendsFragment#newInstance} factory method to
+ * Use the {@link MyDesignsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendsFragment extends Fragment {
-
+public class MyDesignsFragment extends Fragment {
     private RecyclerView friendsRecyclerView;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
+    private String user;
+    private String type;
 
     private String userUid;
     private View mainView;
 
-    public FriendsFragment() {
+    public MyDesignsFragment() {
         // Required empty public constructor
     }
 
@@ -60,6 +63,22 @@ public class FriendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        user = firebaseAuth.getUid().toString();
+        FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                type = snapshot.child("type").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
     }
 
@@ -69,9 +88,8 @@ public class FriendsFragment extends Fragment {
         // Inflate the layout for this fragment
         mainView = inflater.inflate(R.layout.fragment_friends,container,false);
         friendsRecyclerView = (RecyclerView)mainView.findViewById(R.id.friends_recycler_view);
-        firebaseAuth = FirebaseAuth.getInstance();
         userUid = firebaseAuth.getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("user");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
         friendsRecyclerView.setHasFixedSize(true);
         friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -84,45 +102,34 @@ public class FriendsFragment extends Fragment {
         super.onStart();
         //databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("online").setValue(true);
 
-        FirebaseRecyclerAdapter<User,UsersViewHolder> usersViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, UsersViewHolder>(
-                User.class,
+        FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder> usersViewHolderFirebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, MyDesignsFragment.UsersViewHolder>(
+                Post.class,
                 R.layout.user_list_item,
-                UsersViewHolder.class,
+                MyDesignsFragment.UsersViewHolder.class,
                 databaseReference
         ) {
             @Override
-            protected void populateViewHolder(UsersViewHolder usersViewHolder, final User user, int i) {
-                usersViewHolder.setUsername(user.username);
-                usersViewHolder.setImage(user.image);
-                usersViewHolder.setType(user.getType());
-                usersViewHolder.setOnline(user.isOnline());
-                final String user_id = getRef(i).getKey();
-
-                usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
+            protected void populateViewHolder(final MyDesignsFragment.UsersViewHolder usersViewHolder, final Post post, int i) {
+            Log.d("DS",userUid);
+                databaseReference.orderByChild("user").equalTo(userUid).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]{"View Profile","Send Message"};
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getValue() != null) {
+                            Log.d("sd", snapshot.getValue().toString());
+                            usersViewHolder.setUsername(post.title);
+                            usersViewHolder.setImage(post.image);
+                            usersViewHolder.setDescription(post.description);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("Select Option");
-                        builder.setItems(options, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if(i == 0){
-                                    Intent profileIntent = new Intent(getContext(),DesignerAccountDetailsActivity.class);
-                                    profileIntent.putExtra("designer_id",user_id);
-                                    profileIntent.putExtra("type",user.getType());
-                                    profileIntent.putExtra("user_name",user.username);
-                                    startActivity(profileIntent);
-                                }
-                                else if(i == 1){
-                                    Intent chatIntent = new Intent(getContext(),ChatActivity.class);
-                                    chatIntent.putExtra("user_id",user_id);
-                                    startActivity(chatIntent);
-                                }
-                            }
-                        });
-                        builder.show();
+                        }
+                        else{
+                            usersViewHolder.mview.setEnabled(false);
+                            usersViewHolder.mview.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
 
@@ -138,14 +145,11 @@ public class FriendsFragment extends Fragment {
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
             mview = itemView;
+            mview.findViewById(R.id.online_button).setVisibility(View.INVISIBLE);
         }
-        public void setOnline(boolean online){
-            Button onlineButton = (Button)mview.findViewById(R.id.online_button);
-            if(online)
-                onlineButton.setBackgroundColor(Color.GREEN);
-            else
-                onlineButton.setBackgroundColor(Color.GRAY);
-
+        public void setDescription(String description){
+            TextView postDesc = (TextView)mview.findViewById(R.id.user_list_item_phone);
+            postDesc.setText(description);
         }
 
         public void setUsername(String username){
@@ -158,9 +162,5 @@ public class FriendsFragment extends Fragment {
             Picasso.get().load(image).placeholder(R.drawable.account_image).into(custImage);
         }
 
-        public void setType(String type) {
-            TextView itemType = (TextView)mview.findViewById(R.id.user_list_item_phone);
-            itemType.setText(type);
-        }
     }
 }

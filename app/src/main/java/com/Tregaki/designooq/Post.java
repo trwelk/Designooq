@@ -3,11 +3,24 @@ package com.Tregaki.designooq;
 public class Post {
     public String image;
 
+    public Post() {
+    }
+
     public Post(String image, String description, String user) {
         this.image = image;
         this.description = description;
         this.user = user;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String title;
 
     public String getImage() {
         return image;
