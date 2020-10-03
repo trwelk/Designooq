@@ -36,12 +36,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * create an instance of this fragment.
  */
 public class MyDesignsFragment extends Fragment {
+
+    private String type;
     private RecyclerView friendsRecyclerView;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private String user;
-    private String type;
-
     private String userUid;
     private View mainView;
 
@@ -58,7 +58,6 @@ public class MyDesignsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
-
         if(firebaseAuth.getCurrentUser() == null){
             Intent signoutLogin = new Intent(getContext(), LoginActivity.class);
             startActivity(signoutLogin);
@@ -108,10 +107,7 @@ public class MyDesignsFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(final MyDesignsFragment.UsersViewHolder usersViewHolder, final Post post, int i) {
-            Log.d("DS",userUid);
-
                 final String post_id = getRef(i).getKey();
-
                 usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -168,8 +164,6 @@ public class MyDesignsFragment extends Fragment {
                 });
 
                 //-------------------------------------------if user is a customer ------------------------------------
-
-
             }
         };
         friendsRecyclerView.setAdapter(usersViewHolderFirebaseRecyclerAdapter);
