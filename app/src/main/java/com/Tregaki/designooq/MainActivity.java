@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//abcd
         setContentView(R.layout.activity_main);
         Intent someIntent = new Intent(MainActivity.this,MessageListActivity.class);
         startActivity(someIntent);

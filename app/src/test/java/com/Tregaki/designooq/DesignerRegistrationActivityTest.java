@@ -18,7 +18,8 @@ public class DesignerRegistrationActivityTest {
     @Test
     public void phoneHasErrors() {
         assertEquals(true,designerRegistrationActivity.phoneHasErrors(phonenegative) );
-        assertEquals(false,designerRegistrationActivity.phoneHasErrors(phonePositive) );
+        assertEquals(true,designerRegistrationActivity.phoneHasErrors("asdasd") );
+        assertEquals(false,designerRegistrationActivity.phoneHasErrors(phonePositive));
     }
 
     @Test
@@ -31,6 +32,7 @@ public class DesignerRegistrationActivityTest {
     public void emailHasErrors() {
         assertEquals(false,designerRegistrationActivity.emailHasErrors(emailPositive) );
         assertEquals(true,designerRegistrationActivity.emailHasErrors(emailNegative) );
+        assertEquals(true,designerRegistrationActivity.emailHasErrors("trewon") );
 
     }
 
