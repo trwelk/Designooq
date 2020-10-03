@@ -32,7 +32,9 @@
         </activity>
         <activity android:name=".DesignerAccountDetailsActivity" />
         <activity android:name=".RegisterOptionActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity" >
+
+        </activity>
         <activity android:name=".LandingActivity" />
         <activity android:name=".DesignerHomeActivity" />
         <activity android:name=".DesignerAccountActivty" />

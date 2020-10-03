@@ -202,7 +202,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Messages message = snapshot.getValue(Messages.class);
-                Log.d("CHAT_LOG","Adding" + message.getMessage() + message.getKey());
+             //   Log.d("CHAT_LOG","Adding" + message.getMessage() + message.getKey());
                 messagePosition++;
                 if(messagePosition == 1){
                     String messageKey = snapshot.getKey();
@@ -249,7 +249,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Messages message = snapshot.getValue(Messages.class);
-                Log.d("CHAT_LOG","Adding" + message.getMessage() + message.getKey());
+          //      Log.d("CHAT_LOG","Adding" + message.getMessage() + message.getKey());
 
                 if(messagePosition == 1){
                     String messageKey = snapshot.getKey();

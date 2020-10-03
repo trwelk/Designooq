@@ -29,7 +29,7 @@ public class DesignerMyDesigns extends AppCompatActivity{
             "Design 005",
     };
 
-
+    //Added Modifications to Designs
     int[] listviewImage = new int[]{
             R.drawable.account_icon_tab, R.drawable.account_icon_tab, R.drawable.account_icon_tab, R.drawable.account_icon_tab,
             R.drawable.account_icon_tab,
