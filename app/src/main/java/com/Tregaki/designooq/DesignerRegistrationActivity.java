@@ -33,7 +33,10 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
     private  EditText email;
     private  EditText phone;
     private EditText website;
-    private boolean hasErrors = false;
+    private boolean hasErrors1 = false;
+    private boolean hasErrors2 = false;
+    private boolean hasErrors3 = false;
+    private boolean hasErrors4 = false;
 
     private FirebaseAuth mAuth;
     private Button registerButton;
@@ -93,13 +96,13 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
                     userMap.put("type","designer");
                     //userMap.put("online","false");
 
-                    hasErrors = userNameHasErrors(usernameText);
-                    hasErrors = emailHasErrors(emailText);
-                    hasErrors = phoneHasErrors(phoneText);
-                    hasErrors = websiteHasErrors(webSiteText);
+                    hasErrors1 = userNameHasErrors(usernameText);
+                    hasErrors2 = emailHasErrors(emailText);
+                    hasErrors3 = phoneHasErrors(phoneText);
+                    hasErrors4 = websiteHasErrors(webSiteText);
 
 
-                    if(!hasErrors) {
+                    if(!hasErrors1 && !hasErrors1 && !hasErrors3 && !hasErrors2 ) {
                         database.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

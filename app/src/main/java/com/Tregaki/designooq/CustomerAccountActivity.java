@@ -38,6 +38,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class CustomerAccountActivity extends AppCompatActivity {
@@ -51,9 +52,10 @@ public class CustomerAccountActivity extends AppCompatActivity {
     private Button myDownloadsButton;
     private String user;
     private StorageReference mStorageRef;
-    private ImageView customerImg;
+    private CircleImageView customerImg;
     private ProgressDialog progressDialog;
     private String type;
+    private Button changePassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +71,14 @@ public class CustomerAccountActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.customer_account_email);
         password =(EditText) findViewById(R.id.customer_account_password);
         changeImageBtn = (Button)findViewById(R.id.customer_account_change_image_button);
-        customerImg = (ImageView) findViewById(R.id.customer_account_image_view);
+        customerImg = (CircleImageView) findViewById(R.id.customer_account_image_view);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         changeDetailsButton = (Button)findViewById(R.id.customer_account_change_details_button);
         myDownloadsButton = (Button)findViewById(R.id.account_my_downloads_button);
         user = currentUser.getUid();
         userDb = FirebaseDatabase.getInstance().getReference("user").child(user);
         userDb.keepSynced(true);
+        changePassword = (Button)findViewById(R.id.customer_account_change_password_button);
 
         userDb.addValueEventListener(new ValueEventListener() {
             @Override
@@ -133,8 +136,7 @@ public class CustomerAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Map userMap = new HashMap();
-                userMap.put("email",email.getText().toString());
-                userMap.put("password",password.getText().toString());
+                userMap.put("username",username.getText().toString());
                 userDb.updateChildren(userMap, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -157,7 +159,25 @@ public class CustomerAccountActivity extends AppCompatActivity {
             }
         });
 
-
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //----
+                FirebaseAuth.getInstance().sendPasswordResetEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(),"Password Reset Email Sent!",Toast.LENGTH_LONG);
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(),"An Error occured",Toast.LENGTH_LONG);
+                                }
+                            }
+                        });
+                //---
+            }
+        });
     }
 
     @Override

@@ -12,8 +12,8 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@drawable/background_black"
-        tools:layout_editor_absoluteX="-61dp"
-        tools:layout_editor_absoluteY="-16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <include
         android:id="@+id/main_page_toolbar"
@@ -22,12 +22,12 @@
         tools:layout_editor_absoluteY="0dp" />
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/customer_account_image_view"
         android:layout_width="141dp"
         android:layout_height="141dp"
-        android:layout_marginStart="130dp"
         android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar"
         app:srcCompat="@drawable/account_image" />
@@ -65,8 +65,8 @@
 
     <EditText
         android:id="@+id/customer_account_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="211dp"
+        android:layout_height="33dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="@android:color/white"
@@ -81,15 +81,15 @@
 
     <Button
         android:id="@+id/customer_account_change_details_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="248dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
         android:background="@color/colorPrimary"
         android:text="@string/customer_save_changes_btn"
         android:textColor="@color/design_default_color_on_primary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customer_account_password" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/customer_account_change_image_button"
+        app:layout_constraintEnd_toStartOf="@+id/im1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/customer_account_change_image_button" />
 
     <EditText
         android:id="@+id/customer_account_username"
@@ -121,27 +121,42 @@
 
     <Button
         android:id="@+id/customer_account_change_image_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="76dp"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/colorPrimary"
-        android:text="change DP"
+        android:text="change Image"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toStartOf="@+id/customer_account_change_details_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/im1"
         app:layout_constraintTop_toBottomOf="@+id/customer_account_password" />
 
     <Button
         android:id="@+id/account_my_downloads_button"
-        android:layout_width="97dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/colorPrimary"
         android:text="My Uploads"
         android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/customer_account_change_password_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/im1"
         app:layout_constraintTop_toBottomOf="@+id/customer_account_change_image_button" />
 
+    <Button
+        android:id="@+id/customer_account_change_password_button"
+        android:layout_width="85dp"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
+        android:text="Change Password"
+        android:textColor="@color/design_default_color_on_primary"
+        app:layout_constraintBaseline_toBaselineOf="@+id/account_my_downloads_button"
+        app:layout_constraintEnd_toStartOf="@+id/im1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/account_my_downloads_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

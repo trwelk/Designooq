@@ -17,7 +17,6 @@
         android:id="@+id/customer_registration_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
         android:layout_marginTop="220dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
@@ -26,6 +25,7 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textColorHint="@android:color/white"
         android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +33,6 @@
         android:id="@+id/customer_registration_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
         android:layout_marginTop="72dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
@@ -42,14 +41,14 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textColorHint="@android:color/white"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/im1"
         app:layout_constraintTop_toBottomOf="@+id/customer_registration_username" />
 
     <EditText
         android:id="@+id/customer_registration_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
         android:layout_marginTop="72dp"
         android:backgroundTint="@android:color/white"
         android:ems="10"
@@ -58,6 +57,7 @@
         android:textColor="@color/design_default_color_on_primary"
         android:textColorHint="#FFFFFF"
         android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customer_registration_email" />
 
@@ -75,12 +75,15 @@
         android:id="@+id/customer_registration_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="70dp"
         android:background="@color/colorPrimary"
         android:text="@string/customer_register_btn"
         android:textColor="@color/design_default_color_on_primary"
-        app:layout_constraintStart_toStartOf="@+id/im1"
-        app:layout_constraintTop_toBottomOf="@+id/customer_registration_password" />
+        app:layout_constraintBottom_toBottomOf="@+id/im1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customer_registration_password"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

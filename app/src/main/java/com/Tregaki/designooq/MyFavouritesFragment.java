@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ public class MyFavouritesFragment extends Fragment {
 
     private String userUid;
     private View mainView;
+    private Toolbar mainTooldbar;
 
     public MyFavouritesFragment() {
         // Required empty public constructor
@@ -88,7 +90,6 @@ public class MyFavouritesFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("post");
         favRecyclerView.setHasFixedSize(true);
         favRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return mainView;
 
     }
