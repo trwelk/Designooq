@@ -32,6 +32,8 @@ public class CustomerRegistrationActivity extends AppCompatActivity {
     private Button registerButton;
     private ProgressDialog registerProgressDialog;
     private DatabaseReference database;
+    private boolean hasErrors1 = false;
+    private boolean hasErrors2 = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +53,24 @@ public class CustomerRegistrationActivity extends AppCompatActivity {
             String usernameText = username.getText().toString();
             String passwordText = password.getText().toString();
             String emailText = email.getText().toString();
-            if(!TextUtils.isEmpty(passwordText) || !TextUtils.isEmpty(emailText)){
-                registerProgressDialog.setTitle("Registering User");
-                registerProgressDialog.setMessage("Please wait while we create a new user");
-                registerProgressDialog.setCanceledOnTouchOutside(false);
-                registerProgressDialog.show();
-                registerActivity(emailText,passwordText,usernameText);
+
+
+            hasErrors1 = userNameHasErrors(usernameText);
+            hasErrors2 = emailHasErrors(emailText);
+            if (hasErrors1){
+                Toast.makeText(getApplicationContext(),"Please provide a valid username",Toast.LENGTH_LONG).show();
+            }
+            else if(hasErrors2){
+                Toast.makeText(getApplicationContext(),"Please provide a valid email",Toast.LENGTH_LONG).show();
+            }else{
+                if(!TextUtils.isEmpty(passwordText) || !TextUtils.isEmpty(emailText)){
+                    registerProgressDialog.setTitle("Registering User");
+                    registerProgressDialog.setMessage("Please wait while we create a new user");
+                    registerProgressDialog.setCanceledOnTouchOutside(false);
+                    registerProgressDialog.show();
+                    registerActivity(emailText,passwordText,usernameText);
+                }
+
             }
         }
     });
@@ -103,4 +117,19 @@ public class CustomerRegistrationActivity extends AppCompatActivity {
             }
         });
     }
+
+    public boolean emailHasErrors(String emailText) {
+        if (emailText == null || !emailText.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$") || emailText.isEmpty())
+            return true;
+        else
+            return false;
+    }
+
+    public boolean userNameHasErrors(String usernameText) {
+        if(usernameText  == null || usernameText.isEmpty()  || usernameText.length() < 6)
+            return true;
+        else
+            return false;
+    }
+
 }
