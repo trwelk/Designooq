@@ -46,10 +46,10 @@ public class DownloadsActivty extends AppCompatActivity {
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     //String desc = ds.child("desc").getValue(String.class);
                     //String title = ds.child("title").getValue(String.class);
-                    downloads[Integer.parseInt(ds.child("month").getValue().toString())]++;
-                    Log.d("DOWNLOAD_MONTH_Added_MONTH", String.valueOf(downloads[Integer.parseInt(ds.child("month").getValue().toString())]));
+                    downloads[Integer.parseInt(ds.child("month").getValue().toString()) - 1]++;
+                    //Log.d("DOWNLOAD_MONTH_Added_MONTH", String.valueOf(downloads[Integer.parseInt(ds.child("month").getValue().toString())]));
 
-                    Log.d("TAG", ds.child("month").getValue().toString());
+                    //Log.d("TAG", ds.child("month").getValue().toString());
                 }
                 setUpPieChart();
 

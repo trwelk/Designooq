@@ -67,13 +67,33 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
                 String webSiteText = website.getText().toString();
                 String usernameText = username.getText().toString();
 
-                if(!TextUtils.isEmpty(passwordText) || !TextUtils.isEmpty(emailText)){
-                    registerProgressDialog.setTitle("Registering User");
-                    registerProgressDialog.setMessage("Please wait while we create a new user");
-                    registerProgressDialog.setCanceledOnTouchOutside(false);
-                    registerProgressDialog.show();
+                hasErrors1 = userNameHasErrors(usernameText);
+                hasErrors2 = emailHasErrors(emailText);
+                hasErrors3 = phoneHasErrors(phoneText);
+                hasErrors4 = websiteHasErrors(webSiteText);
+                Log.d("VALIDATION",  Boolean.toString(hasErrors1) + Boolean.toString(hasErrors2) + Boolean.toString(hasErrors3));
+                if (hasErrors1){
+                    Toast.makeText(getApplicationContext(),"Please provide a valid username",Toast.LENGTH_LONG).show();
+                }
+                else if(hasErrors2){
+                    Toast.makeText(getApplicationContext(),"Please provide a valid email",Toast.LENGTH_LONG).show();
+                }
+                else if( hasErrors3){
+                    Toast.makeText(getApplicationContext(),"Please provide a valid Phone number",Toast.LENGTH_LONG).show();
 
-                    registerDesigner(emailText,passwordText,usernameText,phoneText,webSiteText);
+                }
+                else if (hasErrors4){
+                    Toast.makeText(getApplicationContext(),"Please provide a valid Website",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if (!TextUtils.isEmpty(passwordText) || !TextUtils.isEmpty(emailText)) {
+                        registerProgressDialog.setTitle("Registering User");
+                        registerProgressDialog.setMessage("Please wait while we create a new user");
+                        registerProgressDialog.setCanceledOnTouchOutside(false);
+                        registerProgressDialog.show();
+
+                        registerDesigner(emailText, passwordText, usernameText, phoneText, webSiteText);
+                    }
                 }
             }
         });
@@ -96,10 +116,7 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
                     userMap.put("type","designer");
                     //userMap.put("online","false");
 
-                    hasErrors1 = userNameHasErrors(usernameText);
-                    hasErrors2 = emailHasErrors(emailText);
-                    hasErrors3 = phoneHasErrors(phoneText);
-                    hasErrors4 = websiteHasErrors(webSiteText);
+
 
 
                     if(!hasErrors1 && !hasErrors1 && !hasErrors3 && !hasErrors2 ) {
@@ -135,7 +152,7 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
     }
 
     public boolean phoneHasErrors(String phoneText) {
-        if(phoneText == null || phoneText.length() != 10)
+        if(phoneText == null || phoneText.length() != 10 || phoneText.isEmpty())
             return true;
         else
             return false;
@@ -143,7 +160,7 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
 
     public boolean websiteHasErrors(String webSiteText) {
 
-        if(webSiteText == null )
+        if(webSiteText == null || webSiteText.isEmpty() )
             return true;
         else{
             try {
@@ -156,14 +173,14 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
     }
 
     public boolean emailHasErrors(String emailText) {
-        if (emailText == null || !emailText.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))
+        if (emailText == null || !emailText.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$") || emailText.isEmpty())
             return true;
         else
             return false;
     }
 
     public boolean userNameHasErrors(String usernameText) {
-        if(usernameText == null || usernameText.length() < 6)
+        if(usernameText  == null || usernameText.isEmpty()  || usernameText.length() < 6)
             return true;
         else
             return false;

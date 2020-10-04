@@ -22,6 +22,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class ChatActivityTest {
+    //--------------------------------------------------------IT19187006------------------------------------------------------------------------
     private String message;
     private String user;
     private String friend;
