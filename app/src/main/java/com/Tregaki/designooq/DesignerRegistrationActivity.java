@@ -48,21 +48,23 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
         registerButton = (Button) findViewById(R.id.customer_registration_button);
         mAuth = FirebaseAuth.getInstance();
         registerProgressDialog = new ProgressDialog(this);
-        username = (EditText)findViewById(R.id.designer_registration_username);
-        password = (EditText)findViewById(R.id.designer_registration_password);
-        email = (EditText)findViewById(R.id.designer_registration_email);
+
         phone = (EditText)findViewById(R.id.designer_registration_phone);
         website = (EditText)findViewById(R.id.designer_registration_website);
         registerButton = (Button)findViewById(R.id.designer_registration_register_button);
+        username = (EditText)findViewById(R.id.designer_registration_username);
+        password = (EditText)findViewById(R.id.designer_registration_password);
+        email = (EditText)findViewById(R.id.designer_registration_email);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String webSiteText = website.getText().toString();
+                String usernameText = username.getText().toString();
                 String passwordText = password.getText().toString();
                 String emailText = email.getText().toString();
                 String phoneText = phone.getText().toString();
-                String webSiteText = website.getText().toString();
-                String usernameText = username.getText().toString();
+
 
                 if(!TextUtils.isEmpty(passwordText) || !TextUtils.isEmpty(emailText)){
                     registerProgressDialog.setTitle("Registering User");
@@ -87,9 +89,9 @@ public class DesignerRegistrationActivity extends AppCompatActivity {
                     HashMap<String,String> userMap = new HashMap<String,String>();
                     userMap.put("username",usernameText);
                     userMap.put("email",emailText);
-                    userMap.put("image","default");
                     userMap.put("phone",phoneText);
                     userMap.put("website",webSiteText);
+                    userMap.put("image","default");
                     userMap.put("type","designer");
                     //userMap.put("online","false");
 
