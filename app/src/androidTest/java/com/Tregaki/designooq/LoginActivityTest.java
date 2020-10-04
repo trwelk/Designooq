@@ -26,7 +26,7 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static org.junit.Assert.*;
 
 public class LoginActivityTest {
-
+////------------------------------------IT19187006---------------------------------------------------------
     private final String validEmail = "Trewon@gmail.com";
     private final String inValidEmail = "Trewon@gmail";
     private final String validPassword = "Trewon@gmail123";
@@ -38,30 +38,24 @@ public class LoginActivityTest {
 
     Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(CustomerHomeActivity.class.getName(),null,false);
     Instrumentation.ActivityMonitor monitor1 = getInstrumentation().addMonitor(RegisterOptionActivity.class.getName(),null,false);
-
-
     @Before
     public void setUp() throws Exception {
         loginActivity = loginActivityRule.getActivity();
     }
-
     @After
     public void tearDown() throws Exception {
     }
-
     @Test
     public void loadUi() {
         View loginButton = loginActivity.findViewById(R.id.login_login_btn);
         View registerButton = loginActivity.findViewById(R.id.login_register_button);
         View emailText = loginActivity.findViewById(R.id.login_email);
         View passWordText = loginActivity.findViewById(R.id.login_password);
-
         assertNotNull(loginButton);
         assertNotNull(registerButton);
         assertNotNull(emailText);
         assertNotNull(passWordText);
     }
-
     @Test
     public void loginSuccess(){
         onView(withId(R.id.login_email)).perform(replaceText("test@test.com"));

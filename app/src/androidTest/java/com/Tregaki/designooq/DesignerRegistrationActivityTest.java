@@ -50,9 +50,7 @@ public class DesignerRegistrationActivityTest {
     public void emailHasErrors() {
         assertEquals(false,designerRegistrationActivity.emailHasErrors(emailPositive) );
         assertEquals(true,designerRegistrationActivity.emailHasErrors(emailNegative) );
-
     }
-
     @Test
     public void userNameHasErrors() {
         assertEquals(false,designerRegistrationActivity.userNameHasErrors(userName) );
