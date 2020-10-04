@@ -24,10 +24,24 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     private         DatabaseReference userDb ;
+    private String friendImage;
 
-    public MessageAdapter(List<Messages> messagesList) {
+    public MessageAdapter(List<Messages> messagesList,String friendIdString) {
 
         this.messagesList = messagesList;
+        userDb = FirebaseDatabase.getInstance().getReference("user").child(friendIdString);
+        userDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 friendImage = snapshot.child("image").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -68,20 +82,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.myMessageText.setVisibility(View.INVISIBLE);
             holder.frienMessageText.setEnabled(true);
             holder.frienMessageText.setVisibility(View.VISIBLE);
-            userDb = FirebaseDatabase.getInstance().getReference("user").child(from);
-            userDb.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    final String imageString = snapshot.child("image").getValue().toString();
-                    Picasso.get().load(imageString).placeholder(R.drawable.account_image).into(holder.senderImage);
+            holder.senderImage.setVisibility(View.VISIBLE);
+            Picasso.get().load(friendImage).placeholder(R.drawable.account_image).into(holder.senderImage);
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         }
 
 

@@ -34,26 +34,27 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d("PAGER_ADAPTER",snapshot.toString());
+                    userType = snapshot.child("type").getValue().toString();
+                    Log.d("PAGER_ADAPTER","PP" + userType.toString());
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
-
-        FirebaseDatabase.getInstance().getReference().child("user").child(user).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("PAGER_ADAPTER",snapshot.toString());
-                userType = snapshot.child("type").getValue().toString();
-                Log.d("PAGER_ADAPTER","PP" + userType.toString());
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         switch (position){
             case 0:
-                FriendsFragment friendsFragment = new FriendsFragment();
+                ChatlistFragment friendsFragment = new ChatlistFragment();
                 return  friendsFragment;
             /* case 1:
                    MyDesignsFragment myDesignsFragment = new MyDesignsFragment();

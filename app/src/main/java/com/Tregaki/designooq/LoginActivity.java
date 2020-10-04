@@ -48,11 +48,27 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String emailText = email.getText().toString();
                 String passwordText = password.getText().toString();
-
+                Boolean error = isEmailFaulty(emailText);
+                Boolean errorPassword = isPasswordFaulty(emailText);
                 loginUser(emailText,passwordText);
             }
         });
 
+
+    }
+
+    public Boolean isPasswordFaulty(String password) {
+        if (password == null || password.length() < 8)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean isEmailFaulty(String emailText) {
+            if (emailText == null || !emailText.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))
+                return true;
+            else
+                return false;
 
     }
 

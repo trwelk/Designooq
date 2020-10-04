@@ -102,7 +102,7 @@ public class MyFavouritesFragment extends Fragment {
                 Post.class,
                 R.layout.user_list_item,
                 MyFavouritesFragment.PostViewHolder.class,
-                databaseReference//.orderByChild("user").equalTo(userUid)
+                databaseReference.orderByChild("user")
         ) {
             @Override
             protected void populateViewHolder(final MyFavouritesFragment.PostViewHolder postViewHolder, final Post post, int i) {
@@ -113,7 +113,7 @@ public class MyFavouritesFragment extends Fragment {
                 postViewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]{"Edit Post","Remove post"};
+                        CharSequence options[] = new CharSequence[]{"View Profile","Remove post"};
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Select Option");
@@ -122,9 +122,9 @@ public class MyFavouritesFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(i == 0){
                                     Intent profileIntent = new Intent(getContext(),DesignerAccountDetailsActivity.class);
-                                    profileIntent.putExtra("post_id",post_id);
-                                    profileIntent.putExtra("post_title",post.title);
-                                    profileIntent.putExtra("post_description",post.getDescription());
+                                    profileIntent.putExtra("designer_id",post.user);
+                                    profileIntent.putExtra("type","designer");
+                                    startActivity(profileIntent);
                                     startActivity(profileIntent);
                                 }
                                 else if(i == 1){
@@ -172,6 +172,11 @@ public class MyFavouritesFragment extends Fragment {
                                         postViewHolder.setUsername(post.title);
                                         postViewHolder.setImage(post.image);
                                         postViewHolder.setDescription(post.description);
+                                    }
+                                    else {
+                                        postViewHolder.postDesc.setVisibility(View.INVISIBLE);
+                                        postViewHolder.custImage.setVisibility(View.INVISIBLE);
+                                        postViewHolder.itemUsernameView.setVisibility(View.INVISIBLE);
                                     }
                                 } else {
                                     postViewHolder.postDesc.setVisibility(View.INVISIBLE);

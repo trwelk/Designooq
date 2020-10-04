@@ -27,6 +27,11 @@ import static org.junit.Assert.*;
 
 public class LoginActivityTest {
 
+    private final String validEmail = "Trewon@gmail.com";
+    private final String inValidEmail = "Trewon@gmail";
+    private final String validPassword = "Trewon@gmail123";
+    private final String inValidPassword = "Trewon";
+
     @Rule
     public ActivityTestRule<LoginActivity> loginActivityRule = new ActivityTestRule<LoginActivity>(LoginActivity.class);
     private  LoginActivity loginActivity;
@@ -88,5 +93,15 @@ public class LoginActivityTest {
 
         onView(withId(R.id.login_email)).check(matches(withHint("Email")));
         onView(withId(R.id.login_password)).check(matches(withHint("password")));
+    }
+
+    public void testEmailValidation(){
+        assertEquals(false,loginActivity.isEmailFaulty(validEmail));
+        assertEquals(true,loginActivity.isEmailFaulty(inValidEmail));
+    }
+
+    public void testPasswordValidation(){
+        assertEquals(false,loginActivity.isPasswordFaulty(validPassword));
+        assertEquals(true,loginActivity.isPasswordFaulty(inValidPassword));
     }
 }

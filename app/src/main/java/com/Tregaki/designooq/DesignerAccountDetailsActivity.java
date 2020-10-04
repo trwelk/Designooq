@@ -8,7 +8,11 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +30,8 @@ public class DesignerAccountDetailsActivity extends AppCompatActivity {
     private EditText userEmail;
     private EditText userPhone;
     private EditText userWebsite;
+    private TextView sendMsgButton;
+    private ImageView sendMsgImg;
 
 
     @Override
@@ -39,8 +45,8 @@ public class DesignerAccountDetailsActivity extends AppCompatActivity {
         userPhone = (EditText)findViewById(R.id.designer_account_phone);
         userWebsite = (EditText)findViewById(R.id.designer_account_website);
         imageView = (CircleImageView) findViewById(R.id.designer_account_image);
-
-
+    sendMsgButton = (TextView) findViewById(R.id.designer_send_message_text);
+        sendMsgImg = (ImageView)  findViewById(R.id.designer_send_message_image);
 
         Toolbar mainTooldbar = (Toolbar) findViewById(R.id.main_page_toolbar);
 
@@ -48,8 +54,27 @@ public class DesignerAccountDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Account Details");
 
         Intent currentIntent = getIntent();
-        String designerId = currentIntent.getStringExtra("designer_id");
+        final String designerId = currentIntent.getStringExtra("designer_id");
         final String[] type = {currentIntent.getStringExtra("type")};
+
+
+        sendMsgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chatIntent = new Intent(getApplicationContext(),ChatActivity.class);
+                chatIntent.putExtra("user_id",designerId);
+                startActivity(chatIntent);
+            }
+        });
+
+        sendMsgImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent chatIntent = new Intent(getApplicationContext(),ChatActivity.class);
+                chatIntent.putExtra("user_id",designerId);
+                startActivity(chatIntent);
+            }
+        });
 
         databaseReference.child("user").child(designerId).addValueEventListener(new ValueEventListener() {
             @Override
