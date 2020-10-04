@@ -36,11 +36,15 @@ public class AddNewPostActivityTest {
 
     @Test
     public void loadUi() {
-        View sendButton = addNewPostActivity.findViewById(R.id.chat_send_button);
-        View msgEditText = addNewPostActivity.findViewById(R.id.chat_edit_test);
+        View textHeading = addNewPostActivity.findViewById(R.id.textView);
+        View titleText = addNewPostActivity.findViewById(R.id.add_new_post_title);
+        View discription = addNewPostActivity.findViewById(R.id.post_fragment_post_status_edit_text);
+        View uploadBtn = addNewPostActivity.findViewById(R.id.post_fragment_upload_image_button);
 
-        assertNotNull(sendButton);
-        assertNotNull(msgEditText);
+        assertNotNull(textHeading);
+        assertNotNull(titleText);
+        assertNotNull(discription);
+        assertNotNull(uploadBtn);
 
         onView(withId(R.id.chat_send_button)).perform(click());
 

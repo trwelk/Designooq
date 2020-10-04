@@ -104,7 +104,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
             startActivity(settingsIntent);
         }
         else if(item.getItemId() == R.id.main_allUsers_btn){
-            Intent usersIntent = new Intent(CustomerHomeActivity.this,AddNewPostActivity.class);
+            Intent usersIntent = new Intent(CustomerHomeActivity.this,UsersActivity.class);
             startActivity(usersIntent);
         }     else if(item.getItemId() == R.id.main_deactivate_btn){
             //userDatabase.removeValue();

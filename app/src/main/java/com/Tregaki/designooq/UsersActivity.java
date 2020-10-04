@@ -6,11 +6,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,19 +55,28 @@ public class UsersActivity extends AppCompatActivity {
                 User.class,R.layout.user_list_item,UsersViewHolder.class,databaseReference
         ) {
             @Override
-            protected void populateViewHolder(UsersViewHolder usersViewHolder, User user, int i) {
+            protected void populateViewHolder(UsersViewHolder usersViewHolder, final User user, int i) {
                 usersViewHolder.setUsername(user.username);
                 usersViewHolder.setImage(user.image);
+                usersViewHolder.setType(user.getType());
+                usersViewHolder.setOnline(user.isOnline());
 
                 final String user_id = getRef(i).getKey();
                 usersViewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent profileIntent = new Intent(UsersActivity.this,ProfileActivity.class);
-                        profileIntent.putExtra("user_id",user_id);
-                        startActivity(profileIntent);
+                        CharSequence options[] = new CharSequence[]{"View Profile","Send Message"};
+
+
+                                    Intent profileIntent = new Intent(getApplicationContext(),DesignerAccountDetailsActivity.class);
+                                    profileIntent.putExtra("designer_id",user_id);
+                                    profileIntent.putExtra("type",user.getType());
+                                    profileIntent.putExtra("user_name",user.username);
+                                    startActivity(profileIntent);
+                              
                     }
                 });
+
             }
         } ;
         usersRecyclerView.setAdapter(firebaseRecyclerAdapter);
@@ -86,6 +99,18 @@ public class UsersActivity extends AppCompatActivity {
             CircleImageView custImage = (CircleImageView)mview.findViewById(R.id.users_item_circular_image);
             Picasso.get().load(image).placeholder(R.drawable.account_image).into(custImage);
         }
+        public void setOnline(boolean online){
+            Button onlineButton = (Button)mview.findViewById(R.id.online_button);
+            if(online)
+                onlineButton.setBackgroundColor(Color.GREEN);
+            else
+                onlineButton.setBackgroundColor(Color.GRAY);
 
+        }
+
+        public void setType(String type) {
+            TextView itemType = (TextView)mview.findViewById(R.id.user_list_item_phone);
+            itemType.setText(type);
+        }
     }
 }

@@ -92,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
         //retrieing messages
         messagesListRecylerView.setHasFixedSize(true);
         messagesListRecylerView.setLayoutManager(linearLayoutManager);
-        messageAdapter = new MessageAdapter(messagesList);
+        messageAdapter = new MessageAdapter(messagesList,friendIdString);
         messagesListRecylerView.setAdapter(messageAdapter);
 
         //configuring the appbar
